@@ -69,7 +69,7 @@ namespace Tmpl8
 
 	void Game::MouseMove(int x, int y)
 	{
-		/* Store the updated mouse position */
+		//Store the updated mouse position
 		float sx = static_cast<float>(ScreenWidth) / BufferWidth;
 		float sy = static_cast<float>(ScreenHeight) / BufferHeight;
 
@@ -88,7 +88,7 @@ namespace Tmpl8
 		if (button == 1) { Game::mouseClicked = false; }
 	}
 
-
+	std::vector<Bullet> bullets;
 
 	void Game::Tick(float deltaTime)
 	{
@@ -113,7 +113,6 @@ namespace Tmpl8
 
 		//Create bullet array
 		Bullet bullet(bulletSprite, player.playerPos, mousePos);
-		std::vector<Bullet> bullets;
 		bullets.push_back(Bullet(bullet));
 
 		//Check mouse position when lmb is clicked and give path to bullet
