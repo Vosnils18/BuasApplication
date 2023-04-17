@@ -10,11 +10,11 @@ class Bullet
 public:
 	Bullet(Sprite* sprite, Vector2f playerPos, Vector2f mousePos);
 
-	void Draw(Tmpl8::Surface* screen);
+	//void Draw(Tmpl8::Surface* screen);
 
 	void setPosition(Vector2f playerpos);
 
-	void Move();
+	void Move(Tmpl8::Surface* screen);
 
 	void setVelocity(Vector2f directionNorm);
 

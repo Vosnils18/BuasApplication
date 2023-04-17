@@ -1,3 +1,12 @@
-﻿  game.cpp
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(112,57): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+﻿  bullet.cpp
+C:\my_projects\BuasApplication\BuasApplication\includes\bullet.cpp(41,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\my_projects\BuasApplication\BuasApplication\includes\bullet.cpp(41,31): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
   tmpl_2019-08.vcxproj -> C:\my_projects\BuasApplication\BuasApplication\tmpl_2019-08_x64_debug.exe

@@ -1,7 +1,9 @@
 #include "bullet.h"
 #include "../game.h"
+#include "../template.h"
 
 using sf::Vector2f;
+using namespace Tmpl8;
 
 Bullet::Bullet(Sprite* sprite, Vector2f playerPos, Vector2f mousePos)
 {
@@ -28,9 +30,15 @@ void Bullet::setPosition(Vector2f playerPos)
 	}
 }
 
-void Bullet::Move()
+void Bullet::Move(Surface* screen)
 {
 	position += currentv;
+
+	if (position.x < TILESIZE || position.x > BufferWidth - TILESIZE || position.y < TILESIZE || position.y > BufferHeight - TILESIZE)
+	{
+		return;
+	}
+	sprite->Draw(screen, position.x, position.y);
 }
 
 void Bullet::setVelocity(Vector2f directionNorm)
@@ -38,7 +46,7 @@ void Bullet::setVelocity(Vector2f directionNorm)
 	currentv = directionNorm * maxSpeed;
 }
 
-void Bullet::Draw(Tmpl8::Surface* screen)
-{
-	sprite->Draw(screen, position.x, position.y);
-}
+//void Bullet::Draw(Tmpl8::Surface* screen)
+//{
+//	sprite->Draw(screen, position.x, position.y);
+//}
