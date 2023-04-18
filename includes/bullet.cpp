@@ -21,14 +21,14 @@ Bullet::Bullet(Sprite* sprite, Vector2f playerPos, Vector2f mousePos)
 	this->zero = zero;
 }
 
-void Bullet::setPosition(Vector2f playerPos)
-{
-	if (newPosition == zero)
-	{
-		position.x = playerPos.x;
-		position.y = playerPos.y;
-	}
-}
+//void Bullet::setPosition(Vector2f playerPos)
+//{
+//	if (newPosition == zero)
+//	{
+//		position.x = playerPos.x;
+//		position.y = playerPos.y;
+//	}
+//}
 
 void Bullet::Move(Surface* screen)
 {

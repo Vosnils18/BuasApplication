@@ -14,8 +14,6 @@ using sf::Vector2f;
 namespace Tmpl8 {
 
 	constexpr float TILESIZE = 16;
-	constexpr int TILEROWS = 30;
-	constexpr int TILECOLUMNS = 30;
 
 class Surface;
 class Game

@@ -1,10 +1,30 @@
-﻿  bullet.cpp
-C:\my_projects\BuasApplication\BuasApplication\includes\bullet.cpp(41,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+﻿  enemy.cpp
+C:\my_projects\BuasApplication\BuasApplication\includes\enemy.cpp(25,104): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\my_projects\BuasApplication\BuasApplication\includes\bullet.cpp(41,31): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\includes\enemy.cpp(25,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\my_projects\BuasApplication\BuasApplication\includes\enemy.cpp(43,77): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\my_projects\BuasApplication\BuasApplication\includes\enemy.cpp(45,80): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\my_projects\BuasApplication\BuasApplication\includes\enemy.cpp(50,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\my_projects\BuasApplication\BuasApplication\includes\enemy.cpp(50,31): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float

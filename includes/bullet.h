@@ -12,7 +12,7 @@ public:
 
 	//void Draw(Tmpl8::Surface* screen);
 
-	void setPosition(Vector2f playerpos);
+	//void setPosition(Vector2f playerpos);
 
 	void Move(Tmpl8::Surface* screen);
 
@@ -27,5 +27,4 @@ private:
 
 	Vector2f position;
 	Vector2f newPosition;
-	bool destroy = false;
 };

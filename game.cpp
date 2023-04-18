@@ -12,6 +12,7 @@
 
 #include "includes/player.h"
 #include "includes/bullet.h"
+#include "includes/enemy.h"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -22,15 +23,18 @@ namespace Tmpl8
 {
 	//Create Sprites and background
 	Surface background("assets/theRealOne/Level_0.png");
-	Sprite* playerSprite(new Sprite(new Surface("assets/theRealOne/imp_idle_anim_f0.png"), 1));
+	Sprite* playerSprite(new Sprite(new Surface("assets/theRealOne/lizard_m_idle_anim_f0.png"), 1));
 	Sprite* bulletSprite(new Sprite (new Surface("assets/theRealOne/Bullet.png"), 2));
+	Sprite* enemySprite(new Sprite(new Surface("assets/theRealOne/imp_idle_anim_f0.png"), 1));
 
+	int counter = 0;
 
 	float Game::mx = 0;
 	float Game::my = 0;
 	bool Game::mouseClicked = false;
 
 	std::vector<Bullet> bullets;
+	std::vector<Enemy> enemies;
 
 	void Game::Init(SDL_Window* win)
 	{
@@ -69,7 +73,6 @@ namespace Tmpl8
 
 		//Create player
 		Player player(playerSprite);
-
 		player.Move();
 
 
@@ -78,31 +81,31 @@ namespace Tmpl8
 		Vector2f aimDir = mousePos - player.playerPos;
 		Vector2f aimDirNorm = aimDir / sqrtf(pow(aimDir.x, 2) + pow(aimDir.y, 2));
 
-		//Create bullet array
+		//Create bullet
 		Bullet bullet(bulletSprite, player.playerPos, mousePos);
 
 		//Check mouse position when lmb is clicked and give path to bullet
 		if (mouseClicked)
 		{
-			bullet.setPosition(player.playerPos);
 			bullet.setVelocity(aimDirNorm);
-
 			bullets.push_back(Bullet(bullet));
 		}
 
 		for (size_t i = 0; i < bullets.size(); i++)
 		{
 			bullets[i].Move(screen);
-
 		}
 
 
 		//enemy code
+		Enemy enemy(enemySprite);
+		enemy.setPosition();
+		enemy.Move();
 
 
 		//Draw
-
 		player.Draw(screen);
+		enemy.Draw(screen);
 
 		//for (size_t i = 0; i < bullets.size(); i++)
 		//{
