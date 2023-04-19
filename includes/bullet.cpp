@@ -19,6 +19,11 @@ Bullet::Bullet(Sprite* sprite, Vector2f playerPos, Vector2f mousePos)
 	}
 	this->newPosition = newPosition;
 	this->zero = zero;
+	this->width = sprite->GetWidth();
+	this->height = sprite->GetHeight();
+
+	this->body.setPosition(position);
+	this->body.setSize(Vector2f(width, height));
 }
 
 //void Bullet::setPosition(Vector2f playerPos)

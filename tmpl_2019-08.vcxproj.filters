@@ -10,6 +10,9 @@
     </ClCompile>
     <ClCompile Include="includes\player.cpp" />
     <ClCompile Include="includes\bullet.cpp" />
+    <ClCompile Include="includes\enemy.cpp" />
+    <ClCompile Include="collider.cpp" />
+    <ClCompile Include="includes\buffer_to_coords.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -21,6 +24,8 @@
     </ClInclude>
     <ClInclude Include="includes\player.h" />
     <ClInclude Include="includes\bullet.h" />
+    <ClInclude Include="includes\enemy.h" />
+    <ClInclude Include="collider.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

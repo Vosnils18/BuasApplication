@@ -27,14 +27,15 @@ namespace Tmpl8
 	Sprite* bulletSprite(new Sprite (new Surface("assets/theRealOne/Bullet.png"), 2));
 	Sprite* enemySprite(new Sprite(new Surface("assets/theRealOne/imp_idle_anim_f0.png"), 1));
 
-	int counter = 0;
+	std::vector<Enemy> enemies;
+	int counter = 3;
 
+	//Mouse state
 	float Game::mx = 0;
 	float Game::my = 0;
 	bool Game::mouseClicked = false;
 
 	std::vector<Bullet> bullets;
-	std::vector<Enemy> enemies;
 
 	void Game::Init(SDL_Window* win)
 	{
@@ -66,17 +67,22 @@ namespace Tmpl8
 	{
 		if (button == 1) { Game::mouseClicked = false; }
 	}
-
+	
 	void Game::Tick(float deltaTime)
 	{
 		background.CopyTo(screen, 0, 0);
 
 		//Create player
 		Player player(playerSprite);
-		player.Move();
 
+		//Create enemy
+		for (size_t i = 0; i < counter; i++)
+		{
+			Enemy enemy(enemySprite);
+			enemies.push_back(Enemy(enemy));
+		}
 
-		//Bullet code
+		//Mouse position and calculating normalised aim direction.
 		Vector2f mousePos = Vector2f(mouseF.x, mouseF.y);
 		Vector2f aimDir = mousePos - player.playerPos;
 		Vector2f aimDirNorm = aimDir / sqrtf(pow(aimDir.x, 2) + pow(aimDir.y, 2));
@@ -84,32 +90,25 @@ namespace Tmpl8
 		//Create bullet
 		Bullet bullet(bulletSprite, player.playerPos, mousePos);
 
-		//Check mouse position when lmb is clicked and give path to bullet
+		//give velocity to bullet when clicked and put bullet object in bullet vector.
 		if (mouseClicked)
 		{
 			bullet.setVelocity(aimDirNorm);
 			bullets.push_back(Bullet(bullet));
 		}
 
+		//Move and draw entities
+		player.Move();
+		player.Draw(screen);
+		for (size_t i = 0; i < counter; i++)
+		{
+			enemies[i].Move();
+			enemies[i].GetCollider().CheckCollision(bullet.GetCollider(), 0.0f);
+			enemies[i].Draw(screen);
+		}
 		for (size_t i = 0; i < bullets.size(); i++)
 		{
 			bullets[i].Move(screen);
 		}
-
-
-		//enemy code
-		Enemy enemy(enemySprite);
-		enemy.setPosition();
-		enemy.Move();
-
-
-		//Draw
-		player.Draw(screen);
-		enemy.Draw(screen);
-
-		//for (size_t i = 0; i < bullets.size(); i++)
-		//{
-		//	bullets[i].Draw(screen);
-		//}
 	}
 };

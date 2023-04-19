@@ -1,6 +1,7 @@
 #pragma once
 #include "../surface.h"
 #include "../game.h"
+#include "../collider.h"
 
 using Tmpl8::Sprite;
 using sf::Vector2f;
@@ -18,6 +19,8 @@ public:
 
 	void setVelocity(Vector2f directionNorm);
 
+	Collider GetCollider() { return Collider(body); }
+
 private:
 	Sprite* sprite = nullptr;
 
@@ -25,6 +28,9 @@ private:
 	float maxSpeed = 10.0f;
 	Vector2f zero;
 
+	sf::RectangleShape body;
+
+	int width, height;
 	Vector2f position;
 	Vector2f newPosition;
 };

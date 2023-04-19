@@ -10,9 +10,13 @@ Enemy::Enemy(Sprite* sprite)
 {
 	this->sprite = sprite;
 	this->position = position;
+	this->setPosition();
 	this->speed = 5.0f;
 	this->width = sprite->GetWidth();
 	this->height = sprite->GetHeight();
+
+	this->body.setPosition(position);
+	this->body.setSize(Vector2f(width, height));
 
 	srand(static_cast<unsigned int>(time(0)));
 }

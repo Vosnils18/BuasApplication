@@ -222,7 +222,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="collider.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="includes\buffer_to_coords.cpp" />
     <ClCompile Include="includes\bullet.cpp" />
     <ClCompile Include="includes\enemy.cpp" />
     <ClCompile Include="includes\player.cpp" />
@@ -230,6 +232,7 @@
     <ClCompile Include="template.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="collider.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="includes\bullet.h" />
     <ClInclude Include="includes\enemy.h" />

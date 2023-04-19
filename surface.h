@@ -67,7 +67,7 @@ public:
 	void Resize( Surface* a_Orig );
 private:
 	// Attributes
-	Pixel* m_Buffer{nullptr};	
+	Pixel* m_Buffer{nullptr};
 	int m_Width{0}, m_Height{0};
 	int m_Pitch{0};
 	int m_Flags{0};
