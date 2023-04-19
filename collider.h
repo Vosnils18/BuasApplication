@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-using sf::Vector2f;
+using namespace Tmpl8;
 
 class Collider
 {
@@ -10,12 +10,12 @@ public:
 
 	void Move(float dx, float dy) { body.move(dx, dy); }
 
-	bool CheckCollision(Collider& other, float push);
+	bool CheckCollision(Collider& other, float force);
 
-	Vector2f GetPosition() { return body.getPosition(); }
-	Vector2f GetHalfSize() { return body.getPosition() / 2.0f; }
+	vec2 GetPosition() { return body.getPosition(); }
+	vec2 GetHalfSize() { return body.getPosition() / 2.0f; }
 
 private:
-	sf::RectangleShape& body;
+	
 };
 

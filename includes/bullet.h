@@ -2,35 +2,34 @@
 #include "../surface.h"
 #include "../game.h"
 #include "../collider.h"
+#include <SFML/Graphics/Rect.hpp>
 
-using Tmpl8::Sprite;
-using sf::Vector2f;
+using namespace Tmpl8;
 
 class Bullet 
 {
 public:
-	Bullet(Sprite* sprite, Vector2f playerPos, Vector2f mousePos);
+	Bullet(Sprite* sprite, vec2 playerPos, vec2 mousePos);
 
 	//void Draw(Tmpl8::Surface* screen);
 
-	//void setPosition(Vector2f playerpos);
+	//void setPosition(vec2 playerpos);
 
 	void Move(Tmpl8::Surface* screen);
 
-	void setVelocity(Vector2f directionNorm);
+	void setVelocity(vec2 directionNorm);
 
 	Collider GetCollider() { return Collider(body); }
 
 private:
 	Sprite* sprite = nullptr;
+	sf::Rect<float> body;
 
-	Vector2f currentv;
+	vec2 currentv;
 	float maxSpeed = 10.0f;
-	Vector2f zero;
-
-	sf::RectangleShape body;
+	vec2 zero;
 
 	int width, height;
-	Vector2f position;
-	Vector2f newPosition;
+	vec2 position;
+	vec2 newPosition;
 };

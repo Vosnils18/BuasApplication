@@ -4,8 +4,7 @@
 #include "../game.h"
 #include "../collider.h"
 
-using Tmpl8::Sprite;
-using sf::Vector2f;
+using namespace Tmpl8;
 
 class Enemy
 {
@@ -23,9 +22,9 @@ public:
 private:
 	Sprite* sprite = nullptr;
 
-	Vector2f position;
+	vec2 position;
 	sf::RectangleShape body;
 	float speed;
-	Vector2f currentv;
+	vec2 currentv;
 	int width, height;
 };

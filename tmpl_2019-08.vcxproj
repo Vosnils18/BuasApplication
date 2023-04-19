@@ -124,7 +124,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>lib;lib\OpenGL;lib\SDL2-2.0.3\include;lib\freeimage\inc;C:\libraries\SFML-2.5.1\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Sync</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -224,7 +224,6 @@
   <ItemGroup>
     <ClCompile Include="collider.cpp" />
     <ClCompile Include="game.cpp" />
-    <ClCompile Include="includes\buffer_to_coords.cpp" />
     <ClCompile Include="includes\bullet.cpp" />
     <ClCompile Include="includes\enemy.cpp" />
     <ClCompile Include="includes\player.cpp" />

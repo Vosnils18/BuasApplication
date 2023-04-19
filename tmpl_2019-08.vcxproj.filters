@@ -12,7 +12,6 @@
     <ClCompile Include="includes\bullet.cpp" />
     <ClCompile Include="includes\enemy.cpp" />
     <ClCompile Include="collider.cpp" />
-    <ClCompile Include="includes\buffer_to_coords.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />

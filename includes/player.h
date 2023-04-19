@@ -3,20 +3,19 @@
 #include "../surface.h"
 #include "../game.h"
 
-using Tmpl8::Sprite;
-using sf::Vector2f;
+using namespace Tmpl8;
 
 constexpr int FULLHP = 3;
 
 class Player
 {
 public:
-	Vector2f playerPos;
+	vec2 playerPos;
 	Player(Sprite* sprite);
 	
 	void Player::Move();
 
-	void Draw(Tmpl8::Surface* screen);
+	void Draw(Surface* screen);
 
 private:
 	Sprite* sprite = nullptr;

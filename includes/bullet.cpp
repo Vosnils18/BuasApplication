@@ -2,10 +2,9 @@
 #include "../game.h"
 #include "../template.h"
 
-using sf::Vector2f;
 using namespace Tmpl8;
 
-Bullet::Bullet(Sprite* sprite, Vector2f playerPos, Vector2f mousePos)
+Bullet::Bullet(Sprite* sprite, vec2 playerPos, vec2 mousePos)
 {
 	this->sprite = sprite;
 
@@ -22,11 +21,11 @@ Bullet::Bullet(Sprite* sprite, Vector2f playerPos, Vector2f mousePos)
 	this->width = sprite->GetWidth();
 	this->height = sprite->GetHeight();
 
-	this->body.setPosition(position);
-	this->body.setSize(Vector2f(width, height));
+	//this->body.setPosition(position);
+	//this->body.setSize(vec2(width, height));
 }
 
-//void Bullet::setPosition(Vector2f playerPos)
+//void Bullet::setPosition(vec2 playerPos)
 //{
 //	if (newPosition == zero)
 //	{
@@ -46,7 +45,7 @@ void Bullet::Move(Surface* screen)
 	sprite->Draw(screen, position.x, position.y);
 }
 
-void Bullet::setVelocity(Vector2f directionNorm)
+void Bullet::setVelocity(vec2 directionNorm)
 {
 	currentv = directionNorm * maxSpeed;
 }

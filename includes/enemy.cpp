@@ -3,8 +3,7 @@
 #include "../game.h"
 #include "../template.h"
 
-using sf::Vector2f;
-using Tmpl8::Sprite;
+using namespace Tmpl8;
 
 Enemy::Enemy(Sprite* sprite)
 {
@@ -15,15 +14,12 @@ Enemy::Enemy(Sprite* sprite)
 	this->width = sprite->GetWidth();
 	this->height = sprite->GetHeight();
 
-	this->body.setPosition(position);
-	this->body.setSize(Vector2f(width, height));
-
 	srand(static_cast<unsigned int>(time(0)));
 }
 
 void Enemy::setPosition()
 {
-	Vector2f randomPosition = Vector2f((rand() % (BufferWidth - 16)) + 16, (rand() % (BufferHeight - 16)) + 16);
+	vec2 randomPosition = vec2((rand() % (BufferWidth - 16)) + 16, (rand() % (BufferHeight - 16)) + 16);
 	position = randomPosition;
 }
 

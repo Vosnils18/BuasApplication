@@ -6,12 +6,14 @@
 float x = 32;
 float y = 32;
 
+using namespace Tmpl8;
+
 Player::Player(Sprite* sprite)
 {
 	this->sprite = sprite;
 	width = sprite->GetWidth();
 	height = sprite->GetHeight();
-	this->playerPos = Vector2f(x, y);
+	this->playerPos = vec2(x, y);
 }
 
 void Player::Move()
