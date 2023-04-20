@@ -2,14 +2,13 @@
 #include "../surface.h"
 #include "../game.h"
 #include "../collider.h"
-#include <SFML/Graphics/Rect.hpp>
 
 using namespace Tmpl8;
 
 class Bullet 
 {
 public:
-	Bullet(Sprite* sprite, vec2 playerPos, vec2 mousePos);
+	Bullet(Sprite* sprite, vec2 playerPos, vec2 mousePos, vec2 directionNorm);
 
 	//void Draw(Tmpl8::Surface* screen);
 
@@ -19,15 +18,16 @@ public:
 
 	void setVelocity(vec2 directionNorm);
 
-	Collider GetCollider() { return Collider(body); }
+	Collider GetCollider() 
+	{ 
+		return Collider(position, vec2(width, height)); 
+	}
 
 private:
 	Sprite* sprite = nullptr;
-	sf::Rect<float> body;
 
 	vec2 currentv;
 	float maxSpeed = 10.0f;
-	vec2 zero;
 
 	int width, height;
 	vec2 position;

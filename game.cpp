@@ -37,7 +37,7 @@ namespace Tmpl8
 	{
 		window = win;
 
-		//Create enemy
+		//Create enemies
 		for (size_t i = 0; i < counter; i++)
 		{
 			enemies.emplace_back(new Enemy(enemySprite));
@@ -46,7 +46,14 @@ namespace Tmpl8
 
 	void Game::Shutdown()
 	{
-
+		for (size_t i = 0; i < bullets.size(); i++)
+		{
+			delete bullets[i];
+		}
+		for (size_t i = 0; i < enemies.size(); i++)
+		{
+			delete enemies[i];
+		}
 	}
 
 	void Game::MouseMove(int x, int y)
@@ -86,7 +93,8 @@ namespace Tmpl8
 		//Mouse position and calculating normalised aim direction.
 		vec2 mousePos = vec2(mouseF.x, mouseF.y);
 		vec2 aimDir = mousePos - player.playerPos;
-		vec2 aimDirNorm = aimDir / sqrtf(pow(aimDir.x, 2) + pow(aimDir.y, 2));
+		vec2 aimDirNorm = aimDir.normalized();
+		std::cout << aimDirNorm.x << " " << aimDirNorm.y << std::endl;
 
 		//Create bullet
 		//Bullet bullet(bulletSprite, player.playerPos, mousePos);
@@ -94,7 +102,7 @@ namespace Tmpl8
 		//give velocity to bullet when clicked and put bullet object in bullet vector.
 		if (mouseClicked)
 		{
-			bullets.push_back(new Bullet(bulletSprite, player.playerPos, mousePos));
+			bullets.emplace_back(new Bullet(bulletSprite, player.playerPos, mousePos, aimDirNorm));
 		}
 
 		//Move and draw entities
@@ -103,7 +111,10 @@ namespace Tmpl8
 		for (size_t i = 0; i < counter; i++)
 		{
 			enemies[i]->Move();
-			//enemies[i].GetCollider().CheckCollision(bullet.GetCollider(), 0.0f);
+			for (size_t j = 0; j < bullets.size(); j++)
+			{
+				enemies[i]->GetCollider().CheckCollision(bullets[j]->GetCollider(), 0.0f);
+			}
 			enemies[i]->Draw(screen);
 		}
 		for (size_t i = 0; i < bullets.size(); i++)

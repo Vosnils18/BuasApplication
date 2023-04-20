@@ -1,12 +1,13 @@
 #include "collider.h"
 #include "template.h"
+#include <utility>
 
 using namespace Tmpl8;
 
-Collider::Collider(sf::Rect& body) :
-	body(body)
+Collider::Collider(vec2 position, vec2 size)
 {
-
+	this->position = position;
+	this->size = size;
 }
 
 bool Collider::CheckCollision(Collider& other, float force)

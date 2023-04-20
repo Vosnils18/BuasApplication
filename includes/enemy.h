@@ -17,13 +17,16 @@ public:
 
 	void Draw(Tmpl8::Surface* screen);
 
-	Collider GetCollider() { return Collider(body); }
+	Collider GetCollider() 
+	{
+		return Collider(position, vec2(width, height));
+	}
 
 private:
 	Sprite* sprite = nullptr;
 
 	vec2 position;
-	sf::RectangleShape body;
+
 	float speed;
 	vec2 currentv;
 	int width, height;

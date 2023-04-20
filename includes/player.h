@@ -2,6 +2,7 @@
 
 #include "../surface.h"
 #include "../game.h"
+#include "../template.h"
 
 using namespace Tmpl8;
 
