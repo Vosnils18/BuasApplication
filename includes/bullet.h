@@ -23,6 +23,8 @@ public:
 		return Collider(position, vec2(width, height)); 
 	}
 
+	bool destroy = false;
+
 private:
 	Sprite* sprite = nullptr;
 

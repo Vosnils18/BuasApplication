@@ -94,7 +94,6 @@ namespace Tmpl8
 		vec2 mousePos = vec2(mouseF.x, mouseF.y);
 		vec2 aimDir = mousePos - player.playerPos;
 		vec2 aimDirNorm = aimDir.normalized();
-		std::cout << aimDirNorm.x << " " << aimDirNorm.y << std::endl;
 
 		//Create bullet
 		//Bullet bullet(bulletSprite, player.playerPos, mousePos);
@@ -113,13 +112,14 @@ namespace Tmpl8
 			enemies[i]->Move();
 			for (size_t j = 0; j < bullets.size(); j++)
 			{
-				enemies[i]->GetCollider().CheckCollision(bullets[j]->GetCollider(), 0.0f);
+				enemies[i]->GetCollider().CheckCollision(bullets[j]->GetCollider(), 1.0f);
 			}
 			enemies[i]->Draw(screen);
 		}
 		for (size_t i = 0; i < bullets.size(); i++)
 		{
 			bullets[i]->Move(screen);
+			if (bullets[i]->destroy == true) { delete bullets[i]; }
 		}
 	}
 };
