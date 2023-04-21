@@ -123,8 +123,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>lib;lib\OpenGL;lib\SDL2-2.0.3\include;lib\freeimage\inc;C:\libraries\SFML-2.5.1\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>lib;lib\OpenGL;lib\SDL2-2.0.3\include;lib\freeimage\inc</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Sync</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -137,7 +137,7 @@
       <StructMemberAlignment>Default</StructMemberAlignment>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>winmm.lib;advapi32.lib;user32.lib;sdl2.lib;sdl2main.lib;opengl32.lib;freeimage.lib;sfml-graphics.lib;sfml-system.lib;sfml-window.lib</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;advapi32.lib;user32.lib;sdl2.lib;sdl2main.lib;opengl32.lib;freeimage.lib</AdditionalDependencies>
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalLibraryDirectories>lib\SDL2-2.0.3\lib\x64;lib\freeimage\lib64;C:\libraries\SFML-2.5.1\lib</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
