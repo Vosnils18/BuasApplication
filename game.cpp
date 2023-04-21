@@ -119,10 +119,18 @@ namespace Tmpl8
 		for (size_t i = 0; i < bullets.size(); i++)
 		{
 			bullets[i]->Move(screen);
-			if (bullets[i]->destroy == true) 
-			{ 
-				delete bullets[i]; 
-			}
 		}
+
+		// Remove deleted bullets.
+		auto deleteDestroyedBullet = [](Bullet* b)
+		{
+			if (b->destroy)
+			{
+				delete b;
+				return true;
+			}
+			return false;
+		};
+		bullets.erase(std::remove_if(bullets.begin(), bullets.end(), deleteDestroyedBullet), bullets.end());
 	}
 };
