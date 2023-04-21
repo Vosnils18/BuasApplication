@@ -3,13 +3,8 @@
 #include <memory>
 #include <iostream>
 
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/System.hpp>
-
 using std::shared_ptr;
 using std::unique_ptr;
-using sf::Vector2f;
 
 namespace Tmpl8 {
 
@@ -46,7 +41,7 @@ private:
 	SDL_Window* window = nullptr;
 
 	unsigned long frame = 0u;
-	Vector2f mouseF;
+	vec2 mouseF;
 };
 
 }; // namespace Tmpl8
