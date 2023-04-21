@@ -48,7 +48,7 @@ namespace Tmpl8
 	{
 		for (size_t i = 0; i < bullets.size(); i++)
 		{
-			delete bullets[i];
+			//delete bullets[i];
 		}
 		for (size_t i = 0; i < enemies.size(); i++)
 		{
@@ -91,7 +91,7 @@ namespace Tmpl8
 		//}
 
 		//Mouse position and calculating normalised aim direction.
-		vec2 mousePos = vec2(mouseF.x, mouseF.y);
+		vec2 mousePos = vec2(mouseF.x - (mouseF.x *2), mouseF.y - (mouseF.y *2));
 		vec2 aimDir = mousePos - player.playerPos;
 		vec2 aimDirNorm = aimDir.normalized();
 
@@ -119,7 +119,10 @@ namespace Tmpl8
 		for (size_t i = 0; i < bullets.size(); i++)
 		{
 			bullets[i]->Move(screen);
-			if (bullets[i]->destroy == true) { delete bullets[i]; }
+			if (bullets[i]->destroy == true) 
+			{ 
+				delete bullets[i]; 
+			}
 		}
 	}
 };

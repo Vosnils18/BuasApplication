@@ -3,6 +3,8 @@
 #include <memory>
 #include <iostream>
 
+#include "template.h"
+
 using std::shared_ptr;
 using std::unique_ptr;
 
