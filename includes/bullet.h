@@ -16,7 +16,7 @@ public:
 
 	void Move(Tmpl8::Surface* screen);
 
-	void setVelocity(vec2 directionNorm);
+	//void setVelocity(vec2 directionNorm);
 
 	Collider GetCollider() 
 	{ 

@@ -48,7 +48,7 @@ namespace Tmpl8
 	{
 		for (size_t i = 0; i < bullets.size(); i++)
 		{
-			//delete bullets[i];
+			delete bullets[i];
 		}
 		for (size_t i = 0; i < enemies.size(); i++)
 		{
@@ -62,11 +62,8 @@ namespace Tmpl8
 		float sx = static_cast<float>(ScreenWidth) / BufferWidth;
 		float sy = static_cast<float>(ScreenHeight) / BufferHeight;
 
-		mouseF.x += x / sx;
-		mouseF.y += y / sy;
-
-		Game::mx = mouseF.x;
-		Game::my = mouseF.y;
+		Game::mx += x / sx;
+		Game::my += y / sy;
 	}
 	void Game::MouseDown(int button)
 	{
@@ -91,7 +88,7 @@ namespace Tmpl8
 		//}
 
 		//Mouse position and calculating normalised aim direction.
-		vec2 mousePos = vec2(mouseF.x - (mouseF.x *2), mouseF.y - (mouseF.y *2));
+		vec2 mousePos = vec2(mx, my);
 		vec2 aimDir = mousePos - player.playerPos;
 		vec2 aimDirNorm = aimDir.normalized();
 
@@ -109,12 +106,19 @@ namespace Tmpl8
 		player.Draw(screen);
 		for (size_t i = 0; i < counter; i++)
 		{
-			enemies[i]->Move();
-			for (size_t j = 0; j < bullets.size(); j++)
+			if (enemies.size() > 0)
 			{
-				enemies[i]->GetCollider().CheckCollision(bullets[j]->GetCollider(), 1.0f);
+				enemies[i]->Move();
+				for (size_t j = 0; j < bullets.size(); j++)
+				{
+					if (enemies[i]->GetCollider().CheckCollision(bullets[j]->GetCollider(), 1.0f))
+					{
+						bullets[j]->destroy = true;
+						enemies[i]->destroy = true;
+					}
+				}
+				enemies[i]->Draw(screen);
 			}
-			enemies[i]->Draw(screen);
 		}
 		for (size_t i = 0; i < bullets.size(); i++)
 		{
@@ -132,5 +136,17 @@ namespace Tmpl8
 			return false;
 		};
 		bullets.erase(std::remove_if(bullets.begin(), bullets.end(), deleteDestroyedBullet), bullets.end());
+
+		//// Remove deleted enemies.
+		//auto deleteDestroyedEnemy = [](Enemy* e)
+		//{
+		//	if (e->destroy)
+		//	{
+		//		delete e;
+		//		return true;
+		//	}
+		//	return false;
+		//};
+		//enemies.erase(std::remove_if(enemies.begin(), enemies.end(), deleteDestroyedEnemy), enemies.end());
 	}
 };

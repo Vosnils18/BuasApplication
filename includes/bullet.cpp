@@ -30,7 +30,6 @@ Bullet::Bullet(Sprite* sprite, vec2 playerPos, vec2 mousePos, vec2 directionNorm
 void Bullet::Move(Surface* screen)
 {
 	position += currentv;
-	std::cout << position.x << std::endl;
 
 	if (position.x < TILESIZE || position.x > BufferWidth - TILESIZE || position.y < TILESIZE || position.y > BufferHeight - TILESIZE)
 	{

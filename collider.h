@@ -13,7 +13,7 @@ public:
 	bool CheckCollision(Collider& other, float force);
 
 	vec2 GetPosition() { return position; }
-	vec2 GetHalfSize() { return vec2(position.x / 2.0f, position.y / 2.0f); }
+	vec2 GetHalfSize() { return vec2(size.x / 2.0f, size.y / 2.0f); }
 
 private:
 	vec2 position;

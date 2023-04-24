@@ -53,7 +53,7 @@ bool Collider::CheckCollision(Collider& other, float force)
 				other.Move(0.0f, intersectY * force);
 			}
 		}
-		
+
 		return true;
 	}
 	

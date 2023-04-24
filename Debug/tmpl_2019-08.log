@@ -1,30 +1,6 @@
-﻿  collider.cpp
-C:\my_projects\BuasApplication\BuasApplication\collider.cpp(28,9): warning C4552: '-': result of expression not used
-  game.cpp
+﻿  game.cpp
 C:\my_projects\BuasApplication\BuasApplication\includes\bullet.h(23,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\my_projects\BuasApplication\BuasApplication\includes\bullet.h(23,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\my_projects\BuasApplication\BuasApplication\includes\enemy.h(22,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\my_projects\BuasApplication\BuasApplication\includes\enemy.h(22,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  bullet.cpp
-C:\my_projects\BuasApplication\BuasApplication\includes\bullet.h(23,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\bullet.h(23,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\bullet.cpp(40,43): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\bullet.cpp(40,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  enemy.cpp
-C:\my_projects\BuasApplication\BuasApplication\includes\enemy.h(22,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\enemy.h(22,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\enemy.cpp(22,96): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\enemy.cpp(22,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\enemy.cpp(36,77): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\enemy.cpp(38,80): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\enemy.cpp(43,43): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\enemy.cpp(43,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  player.cpp
-C:\my_projects\BuasApplication\BuasApplication\includes\player.cpp(27,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\player.cpp(29,62): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\player.cpp(34,26): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\player.cpp(34,23): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  surface.cpp
-  template.cpp
-  Generating Code...
   tmpl_2019-08.vcxproj -> C:\my_projects\BuasApplication\BuasApplication\tmpl_2019-08_x64_debug.exe
