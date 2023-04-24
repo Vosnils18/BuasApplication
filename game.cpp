@@ -31,6 +31,7 @@ namespace Tmpl8
 	float Game::mx = 0;
 	float Game::my = 0;
 	bool Game::mouseClicked = false;
+	int attackTimer = 0;
 
 
 	void Game::Init(SDL_Window* win)
@@ -81,44 +82,41 @@ namespace Tmpl8
 		//Create player
 		Player player(playerSprite);
 
-		////Create enemy
-		//for (size_t i = 0; i < counter; i++)
-		//{
-		//	enemies.emplace_back(enemySprite);
-		//}
-
 		//Mouse position and calculating normalised aim direction.
 		vec2 mousePos = vec2(mx, my);
 		vec2 aimDir = mousePos - player.playerPos;
 		vec2 aimDirNorm = aimDir.normalized();
 
-		//Create bullet
-		//Bullet bullet(bulletSprite, player.playerPos, mousePos);
-
 		//give velocity to bullet when clicked and put bullet object in bullet vector.
 		if (mouseClicked)
 		{
-			bullets.emplace_back(new Bullet(bulletSprite, player.playerPos, mousePos, aimDirNorm));
+			std::cout << "attack!" << attackTimer << std::endl;
+			if (attackTimer == 0)
+			{
+				bullets.emplace_back(new Bullet(bulletSprite, player.playerPos, mousePos, aimDirNorm));
+				attackTimer += 7;
+			}
+		}
+		if (attackTimer > 0)
+		{
+			attackTimer--;
 		}
 
 		//Move and draw entities
 		player.Move();
 		player.Draw(screen);
-		for (size_t i = 0; i < counter; i++)
+		for (size_t i = 0; i < enemies.size(); i++)
 		{
-			if (enemies.size() > 0)
+			enemies[i]->Move();
+			for (size_t j = 0; j < bullets.size(); j++)
 			{
-				enemies[i]->Move();
-				for (size_t j = 0; j < bullets.size(); j++)
+				if (enemies[i]->GetCollider().CheckCollision(bullets[j]->GetCollider(), 1.0f))
 				{
-					if (enemies[i]->GetCollider().CheckCollision(bullets[j]->GetCollider(), 1.0f))
-					{
-						bullets[j]->destroy = true;
-						enemies[i]->destroy = true;
-					}
+					bullets[j]->destroy = true;
+					enemies[i]->destroy = true;
 				}
-				enemies[i]->Draw(screen);
 			}
+			enemies[i]->Draw(screen);
 		}
 		for (size_t i = 0; i < bullets.size(); i++)
 		{
@@ -137,16 +135,16 @@ namespace Tmpl8
 		};
 		bullets.erase(std::remove_if(bullets.begin(), bullets.end(), deleteDestroyedBullet), bullets.end());
 
-		//// Remove deleted enemies.
-		//auto deleteDestroyedEnemy = [](Enemy* e)
-		//{
-		//	if (e->destroy)
-		//	{
-		//		delete e;
-		//		return true;
-		//	}
-		//	return false;
-		//};
-		//enemies.erase(std::remove_if(enemies.begin(), enemies.end(), deleteDestroyedEnemy), enemies.end());
+		// Remove deleted enemies.
+		auto deleteDestroyedEnemy = [](Enemy* e)
+		{
+			if (e->destroy)
+			{
+				delete e;
+				return true;
+			}
+			return false;
+		};
+		enemies.erase(std::remove_if(enemies.begin(), enemies.end(), deleteDestroyedEnemy), enemies.end());
 	}
 };

@@ -22,12 +22,13 @@ public:
 		return Collider(position, vec2(width, height));
 	}
 
-	bool destroy;
+	bool destroy = false;
 
 private:
 	Sprite* sprite = nullptr;
 
 	vec2 position;
+	int enemyMoveTimer = 0;
 
 	float speed;
 	vec2 currentv;
