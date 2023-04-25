@@ -11,7 +11,7 @@ class Enemy
 public:
 	Enemy(Sprite* spriteIdle, Sprite* spriteRun);
 
-	void setPosition();
+	void setPosition(vec2 pos);
 
 	void Update();
 

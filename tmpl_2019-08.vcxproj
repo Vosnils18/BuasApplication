@@ -227,6 +227,7 @@
     <ClCompile Include="includes\bullet.cpp" />
     <ClCompile Include="includes\enemy.cpp" />
     <ClCompile Include="includes\player.cpp" />
+    <ClCompile Include="includes\ui.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="template.cpp" />
   </ItemGroup>
@@ -236,6 +237,7 @@
     <ClInclude Include="includes\bullet.h" />
     <ClInclude Include="includes\enemy.h" />
     <ClInclude Include="includes\player.h" />
+    <ClInclude Include="includes\ui.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
   </ItemGroup>

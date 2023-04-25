@@ -12,7 +12,6 @@ Enemy::Enemy(Sprite* spriteIdle, Sprite* spriteRun)
 	this->spriteIdle = spriteIdle;
 
 	this->position = position;
-	this->setPosition();
 
 	this->speed = 5.0f;
 	this->width = 16;
@@ -28,10 +27,9 @@ Enemy::Enemy(Sprite* spriteIdle, Sprite* spriteRun)
 	srand(static_cast<unsigned int>(time(0)));
 }
 
-void Enemy::setPosition()
+void Enemy::setPosition(vec2 pos)
 {
-	vec2 randomPosition = vec2((rand() % (BufferWidth - 16)) + 16, (rand() % (BufferHeight - 16)) + 16);
-	position = randomPosition;
+	position = pos;
 }
 
 void Enemy::Update()

@@ -10,9 +10,9 @@ using namespace Tmpl8;
 class Player
 {
 public:
-	Player(Sprite* spriteIdle, Sprite* spriteRun);
+	Player(Sprite* spriteIdle, Sprite* spriteIdleRed, Sprite* spriteRun, Sprite* spriteRunRed);
 	
-	void Player::Update();
+	void Update();
 
 	void Draw(Surface* screen);
 
@@ -28,7 +28,9 @@ public:
 
 private:
 	Sprite* spriteIdle = nullptr;
+	Sprite* spriteIdleRed = nullptr;
 	Sprite* spriteRun = nullptr;
+	Sprite* spriteRunRed = nullptr;
 	Sprite* activeSprite = nullptr;
 
 	int animationFrame;

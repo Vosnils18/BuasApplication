@@ -13,20 +13,28 @@
 #include "includes/player.h"
 #include "includes/bullet.h"
 #include "includes/enemy.h"
+#include "includes/ui.h"
 
 
 namespace Tmpl8
 {
 	//Create Sprites and background
 	Surface background("assets/theRealOne/Level_0.png");
-	Sprite* playerSpriteIdle(new Sprite(new Surface("assets/theRealOne/Wizard_Sprites.png"), 8));
+	
+	Sprite* playerSpriteIdle(new Sprite(new Surface("assets/theRealOne/Wizard_run.png"), 8));
 	Sprite* playerSpriteRun(new Sprite(new Surface("assets/theRealOne/Wizard_idle.png"), 8));
-	Sprite* bulletSprite(new Sprite (new Surface("assets/theRealOne/Bullet.png"), 2));
+	Sprite* playerSpriteIdleRed(new Sprite(new Surface("assets/theRealOne/Wizard_run_Red.png"), 8));
+	Sprite* playerSpriteRunRed(new Sprite(new Surface("assets/theRealOne/Wizard_idle_Red.png"), 8));
+	
+	Sprite* bulletSprite(new Sprite(new Surface("assets/theRealOne/Bullet.png"), 2));
+	Sprite* heartSprite(new Sprite(new Surface("assets/theRealOne/Hearts.png"), 3));
+	
 	Sprite* enemySpriteIdle(new Sprite(new Surface("assets/theRealOne/Imp_idle.png"), 8));
 	Sprite* enemySpriteRun(new Sprite(new Surface("assets/theRealOne/Imp_run.png"), 8));
 	
 	std::vector<Bullet*> bullets;
 	std::vector<Enemy*> enemies;
+	std::vector<Heart*> hearts;
 	int counter = 10;
 
 	//Mouse state
@@ -36,18 +44,26 @@ namespace Tmpl8
 	int attackTimer = 0;
 
 	//Create player
-	Player player(playerSpriteIdle, playerSpriteRun);
+	Player player(playerSpriteIdle, playerSpriteIdleRed, playerSpriteRun, playerSpriteRunRed);
 
 	int currentScore;
 
 	void Game::Init(SDL_Window* win)
 	{
 		window = win;
+		srand(static_cast<unsigned int>(time(0)));
 
 		//Create enemies
 		for (size_t i = 0; i < counter; i++)
 		{
 			enemies.emplace_back(new Enemy(enemySpriteIdle, enemySpriteRun));
+			vec2 randomNumber = vec2((rand() % (BufferWidth - 16)) + 16, (rand() % (BufferHeight - 16)) + 16);
+			enemies[i]->setPosition(randomNumber);
+		}
+		
+		for (size_t i = 0; i < player.health; i++)
+		{
+			hearts.emplace_back(new Heart(heartSprite));
 		}
 
 		currentScore = 0;
@@ -62,6 +78,10 @@ namespace Tmpl8
 		for (size_t i = 0; i < enemies.size(); i++)
 		{
 			delete enemies[i];
+		}
+		for (size_t i = 0; i < hearts.size(); i++)
+		{
+			delete hearts[i];
 		}
 	}
 

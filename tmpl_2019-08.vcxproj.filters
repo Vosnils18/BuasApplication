@@ -12,6 +12,7 @@
     <ClCompile Include="includes\bullet.cpp" />
     <ClCompile Include="includes\enemy.cpp" />
     <ClCompile Include="collider.cpp" />
+    <ClCompile Include="includes\ui.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -25,6 +26,7 @@
     <ClInclude Include="includes\bullet.h" />
     <ClInclude Include="includes\enemy.h" />
     <ClInclude Include="collider.h" />
+    <ClInclude Include="includes\ui.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

@@ -1,16 +1,18 @@
 #include "player.h"
-#include "../template.h"
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
 using namespace Tmpl8;
 
-constexpr int FULLHP = 5;
+constexpr int FULLHP = 6;
+constexpr float MOVESPEED = 1.2;
 
-Player::Player(Sprite* spriteIdle, Sprite* spriteRun)
+Player::Player(Sprite* spriteIdle, Sprite* spriteIdleRed, Sprite* spriteRun, Sprite* spriteRunRed)
 {
 	this->spriteIdle = spriteIdle;
+	this->spriteIdleRed = spriteIdleRed;
 	this->spriteRun = spriteRun;
+	this->spriteRunRed = spriteRunRed;
 	this->activeSprite = spriteIdle;
 
 	this->animationFrame = 1;
@@ -29,22 +31,38 @@ void Player::Update()
 {
 	if (running)
 	{
-		activeSprite = spriteRun;
+		if (invincibilityTimer > 0)
+		{
+			activeSprite = spriteRunRed;
+			invincibilityTimer--;
+		}
+		else
+		{
+			activeSprite = spriteRun;
+		}
 		std::cout << "Running" << std::endl;
 	}
 	else
 	{
-		activeSprite = spriteIdle;
+		if (invincibilityTimer > 0)
+		{
+			activeSprite = spriteIdleRed;
+			invincibilityTimer--;
+		}
+		else
+		{
+			activeSprite = spriteIdle;
+		}
 		std::cout << "Idle" << std::endl;
 	}
 
 	if ((GetAsyncKeyState('W')) || (GetAsyncKeyState('A')) || (GetAsyncKeyState('S')) || (GetAsyncKeyState('D')))
 	{
 		running = true;
-		if (GetAsyncKeyState('A')) { position.x--; lookingLeft = true; }
-		if (GetAsyncKeyState('D')) { position.x++; lookingLeft = false; }
-		if (GetAsyncKeyState('W')) { position.y--; }
-		if (GetAsyncKeyState('S')) { position.y++; }
+		if (GetAsyncKeyState('A')) { position.x = position.x - MOVESPEED; lookingLeft = true; }
+		if (GetAsyncKeyState('D')) { position.x = position.x + MOVESPEED; lookingLeft = false; }
+		if (GetAsyncKeyState('W')) { position.y = position.y - MOVESPEED; }
+		if (GetAsyncKeyState('S')) { position.y = position.y + MOVESPEED; }
 	}
 	else { running = false; }
 
@@ -74,9 +92,6 @@ void Player::Update()
 		}
 	}
 
-	if (invincibilityTimer > 0)
-	{ invincibilityTimer--; }
-
 	if (position.x < 16) { position.x = 16; }
 	if (position.x > BufferWidth - 16 - width) { position.x = BufferWidth - 16 - width; }
 	if (position.y < 16 - 5) { position.y = 16 - 5; }
@@ -93,6 +108,6 @@ void Player::DealDamage(int damage)
 	if (invincibilityTimer < 1)
 	{
 		health -= damage;
-		invincibilityTimer += 40;
+		invincibilityTimer += 50;
 	}
 }
