@@ -9,11 +9,11 @@ using namespace Tmpl8;
 class Enemy
 {
 public:
-	Enemy(Sprite* sprite);
+	Enemy(Sprite* spriteIdle, Sprite* spriteRun);
 
 	void setPosition();
 
-	void Move();
+	void Update();
 
 	void Draw(Tmpl8::Surface* screen);
 
@@ -25,10 +25,17 @@ public:
 	bool destroy = false;
 
 private:
-	Sprite* sprite = nullptr;
+	Sprite* spriteIdle = nullptr;
+	Sprite* spriteRun = nullptr;
+	Sprite* activeSprite = nullptr;
 
 	vec2 position;
-	int enemyMoveTimer = 0;
+	int enemyMoveTimer;
+	int direction;
+	
+	bool running;
+	int animationFrame;
+	bool lookingLeft;
 
 	float speed;
 	vec2 currentv;

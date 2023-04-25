@@ -3,23 +3,38 @@
 #include "../surface.h"
 #include "../game.h"
 #include "../template.h"
+#include "../collider.h"
 
 using namespace Tmpl8;
-
-constexpr int FULLHP = 3;
 
 class Player
 {
 public:
-	vec2 playerPos;
-	Player(Sprite* sprite);
+	Player(Sprite* spriteIdle, Sprite* spriteRun);
 	
-	void Player::Move();
+	void Player::Update();
 
 	void Draw(Surface* screen);
 
+	void DealDamage(int damage);
+
+	Collider GetCollider()
+	{
+		return Collider(position, vec2(width, height));
+	}
+
+	vec2 position;
+	int health;
+
 private:
-	Sprite* sprite = nullptr;
-	int health = FULLHP;
+	Sprite* spriteIdle = nullptr;
+	Sprite* spriteRun = nullptr;
+	Sprite* activeSprite = nullptr;
+
+	int animationFrame;
+	bool running;
+	bool lookingLeft;
+
+	int invincibilityTimer;
 	int width, height;
 };
