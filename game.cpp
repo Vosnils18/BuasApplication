@@ -15,6 +15,7 @@
 #include "includes/enemy.h"
 #include "includes/ui.h"
 
+constexpr int FULLHP = 6;
 
 namespace Tmpl8
 {
@@ -61,7 +62,7 @@ namespace Tmpl8
 			enemies[i]->setPosition(randomNumber);
 		}
 		
-		for (size_t i = 0; i < player.health; i++)
+		for (size_t i = 0; i < FULLHP / 2; i++)
 		{
 			hearts.emplace_back(new Heart(heartSprite));
 		}
@@ -156,6 +157,12 @@ namespace Tmpl8
 
 		player.Update();
 		player.Draw(screen);
+
+		for (size_t i = 0; i < hearts.size(); i++)
+		{
+			hearts[i]->Update(player.health, i);
+			hearts[i]->Draw(screen);
+		}
 
 		// Remove deleted bullets.
 		auto deleteDestroyedBullet = [](Bullet* b)

@@ -40,7 +40,6 @@ void Player::Update()
 		{
 			activeSprite = spriteRun;
 		}
-		std::cout << "Running" << std::endl;
 	}
 	else
 	{
@@ -53,7 +52,6 @@ void Player::Update()
 		{
 			activeSprite = spriteIdle;
 		}
-		std::cout << "Idle" << std::endl;
 	}
 
 	if ((GetAsyncKeyState('W')) || (GetAsyncKeyState('A')) || (GetAsyncKeyState('S')) || (GetAsyncKeyState('D')))
