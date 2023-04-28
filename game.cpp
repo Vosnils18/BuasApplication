@@ -48,10 +48,12 @@ namespace Tmpl8
 	Player player(playerSpriteIdle, playerSpriteIdleRed, playerSpriteRun, playerSpriteRunRed);
 
 	int currentScore;
+	int gameState;
 
 	void Game::Init(SDL_Window* win)
 	{
 		window = win;
+		gameState = 0;
 		srand(static_cast<unsigned int>(time(0)));
 
 		//Create enemies
@@ -106,88 +108,123 @@ namespace Tmpl8
 	
 	void Game::Tick(float deltaTime)
 	{
-		background.CopyTo(screen, 0, 0);
-
-		//Mouse position and calculating normalised aim direction.
-		vec2 mousePos = vec2(mx, my);
-		vec2 aimDir = mousePos - player.position;
-		vec2 aimDirNorm = aimDir.normalized();
-
-		//give velocity to bullet when clicked and put bullet object in bullet vector.
-		if (mouseClicked)
+		switch (gameState)
 		{
-			if (attackTimer == 0)
+		case 0:
+			gameState = 1;
+			std::cout << "0 to 1" << std::endl;
+			break;
+
+		case 1:
+		{
+			background.CopyTo(screen, 0, 0);
+
+			//Mouse position and calculating normalised aim direction.
+			vec2 mousePos = vec2(mx, my);
+			vec2 aimDir = mousePos - player.position;
+			vec2 aimDirNorm = aimDir.normalized();
+
+			//give velocity to bullet when clicked and put bullet object in bullet vector.
+			if (mouseClicked)
 			{
-				bullets.emplace_back(new Bullet(bulletSprite, player.position, mousePos, aimDirNorm));
-				attackTimer += 15;
-			}
-		}
-		if (attackTimer > 0)
-		{
-			
-			attackTimer = attackTimer - 1 * (deltaTime / 10);
-		}
-
-		//Move entities while checking collision with others, then draw them to the screen.
-		for (size_t i = 0; i < enemies.size(); i++)
-		{
-			enemies[i]->Update();
-			for (size_t j = 0; j < bullets.size(); j++)
-			{
-				if (enemies[i]->GetCollider().CheckCollision(bullets[j]->GetCollider(), 1.0f))
+				if (attackTimer == 0)
 				{
-					bullets[j]->destroy = true;
-					enemies[i]->destroy = true;
+					bullets.emplace_back(new Bullet(bulletSprite, player.position, mousePos, aimDirNorm));
+					attackTimer += 15;
 				}
 			}
-
-			if (enemies[i]->GetCollider().CheckCollision(player.GetCollider(), 2.0f))
+			if (attackTimer > 0)
 			{
-				player.DealDamage(1);
-				std::cout << "Your health: " << player.health << std::endl;
+
+				attackTimer = attackTimer - 1 * (deltaTime / 10);
 			}
 
-			enemies[i]->Draw(screen);
-		}
-
-		for (size_t i = 0; i < bullets.size(); i++)
-		{
-			bullets[i]->Move(screen);
-		}
-
-		player.Update();
-		player.Draw(screen);
-
-		for (size_t i = 0; i < hearts.size(); i++)
-		{
-			hearts[i]->Update(player.health, i);
-			hearts[i]->Draw(screen);
-		}
-
-		// Remove deleted bullets.
-		auto deleteDestroyedBullet = [](Bullet* b)
-		{
-			if (b->destroy)
+			//Move entities while checking collision with others, then draw them to the screen.
+			for (size_t i = 0; i < enemies.size(); i++)
 			{
-				delete b;
-				return true;
-			}
-			return false;
-		};
-		bullets.erase(std::remove_if(bullets.begin(), bullets.end(), deleteDestroyedBullet), bullets.end());
+				enemies[i]->Update();
+				for (size_t j = 0; j < bullets.size(); j++)
+				{
+					if (enemies[i]->GetCollider().CheckCollision(bullets[j]->GetCollider(), 1.0f))
+					{
+						bullets[j]->destroy = true;
+						enemies[i]->destroy = true;
+					}
+				}
 
-		// Remove deleted enemies.
-		auto deleteDestroyedEnemy = [](Enemy* e)
-		{
-			if (e->destroy)
-			{
-				delete e;
-				currentScore++;
-				std::cout << "Your score: " << currentScore << std::endl;
-				return true;
+				if (enemies[i]->GetCollider().CheckCollision(player.GetCollider(), 2.0f))
+				{
+					player.DealDamage(1);
+				}
+
+				enemies[i]->Draw(screen);
 			}
-			return false;
-		};
-		enemies.erase(std::remove_if(enemies.begin(), enemies.end(), deleteDestroyedEnemy), enemies.end());
+
+			for (size_t i = 0; i < bullets.size(); i++)
+			{
+				bullets[i]->Move(screen);
+			}
+
+			player.Update();
+			player.Draw(screen);
+
+			for (size_t i = 0; i < hearts.size(); i++)
+			{
+				hearts[i]->Update(player.health, i);
+				hearts[i]->Draw(screen);
+			}
+
+			// Remove deleted bullets.
+			auto deleteDestroyedBullet = [](Bullet* b)
+			{
+				if (b->destroy)
+				{
+					delete b;
+					return true;
+				}
+				return false;
+			};
+			bullets.erase(std::remove_if(bullets.begin(), bullets.end(), deleteDestroyedBullet), bullets.end());
+
+			// Remove deleted enemies.
+			auto deleteDestroyedEnemy = [](Enemy* e)
+			{
+				if (e->destroy)
+				{
+					delete e;
+					currentScore++;
+					std::cout << "Your score: " << currentScore << std::endl;
+					return true;
+				}
+				return false;
+			};
+			enemies.erase(std::remove_if(enemies.begin(), enemies.end(), deleteDestroyedEnemy), enemies.end());
+
+			if (player.health <= 0)
+			{
+				gameState = 2;
+			}
+			break;
+		}
+		case 2:
+		{
+			screen->Clear(30);
+
+			int boxWidth = 100;
+			int boxHeight = 50;
+
+			int BoxX1 = (BufferWidth / 2) - (boxWidth / 2);
+			int BoxY1 = (BufferHeight / 2) - (boxHeight / 2);
+
+			int tx = BoxX1 + (boxWidth - 6 * strlen("Game Over")) / 2.0 + 1;
+			int ty = BoxY1 + (boxHeight - 6) / 2.0;
+
+			screen->Bar(BoxX1, BoxY1, BoxX1 + boxWidth, BoxY1 + boxHeight, 0);
+			screen->Print("Game Over", tx, ty, 255);
+			
+			std::cout << gameState << std::endl;
+			break;
+		}
+		}
 	}
 };
