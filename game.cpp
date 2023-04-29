@@ -32,6 +32,8 @@ namespace Tmpl8
 	
 	Sprite* enemySpriteIdle(new Sprite(new Surface("assets/theRealOne/Imp_idle.png"), 8));
 	Sprite* enemySpriteRun(new Sprite(new Surface("assets/theRealOne/Imp_run.png"), 8));
+
+	Button* restartButton(new Button("Restart Game", 0, 0xffffff));
 	
 	std::vector<Bullet*> bullets;
 	std::vector<Enemy*> enemies;
@@ -50,12 +52,14 @@ namespace Tmpl8
 	int currentScore;
 	int gameState;
 
-	void Game::Init(SDL_Window* win)
+	void Game::Init()
 	{
-		window = win;
 		gameState = 0;
 		srand(static_cast<unsigned int>(time(0)));
+	}
 
+	void Game::Start()
+	{
 		//Create enemies
 		for (size_t i = 0; i < counter; i++)
 		{
@@ -63,7 +67,9 @@ namespace Tmpl8
 			vec2 randomNumber = vec2((rand() % (BufferWidth - 16)) + 16, (rand() % (BufferHeight - 16)) + 16);
 			enemies[i]->setPosition(randomNumber);
 		}
-		
+
+		player.health = FULLHP;
+		player.position = vec2(32, 32);
 		for (size_t i = 0; i < FULLHP / 2; i++)
 		{
 			hearts.emplace_back(new Heart(heartSprite));
@@ -105,12 +111,35 @@ namespace Tmpl8
 	{
 		if (button == 1) { Game::mouseClicked = false; }
 	}
+
+	void Game::Reset()
+	{
+		for (size_t i = 0; i < bullets.size(); i++)
+		{
+			bullets[1]->destroy = true;
+		}
+		for (size_t i = 0; i < enemies.size(); i++)
+		{
+			enemies[i]->destroy =true;
+		}
+		//for (size_t i = 0; i < hearts.size(); i++)
+		//{
+		//	delete hearts[i];
+		//}
+		auto deleteDestroyedHeart = [](Heart* h)
+		{
+			delete h;
+			return true;
+		};
+		hearts.erase(std::remove_if(hearts.begin(), hearts.end(), deleteDestroyedHeart), hearts.end());
+	}
 	
 	void Game::Tick(float deltaTime)
 	{
 		switch (gameState)
 		{
 		case 0:
+			Start();
 			gameState = 1;
 			std::cout << "0 to 1" << std::endl;
 			break;
@@ -221,8 +250,16 @@ namespace Tmpl8
 
 			screen->Bar(BoxX1, BoxY1, BoxX1 + boxWidth, BoxY1 + boxHeight, 0);
 			screen->Print("Game Over", tx, ty, 255);
-			
-			std::cout << gameState << std::endl;
+
+			restartButton->Create(screen, vec2(BoxX1, BoxY1 + (boxHeight * 2)));
+			if (mouseClicked)
+			{
+				if (restartButton->CheckPosition(vec2(mx, my)))
+				{
+					Reset();
+					gameState = 0;
+				}
+			}
 			break;
 		}
 		}

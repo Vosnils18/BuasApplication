@@ -25,34 +25,34 @@ bool Collider::CheckCollision(Collider& other, float force)
 
 	if (intersectX < 0.0f && intersectY < 0.0f)
 	{
-		force - std::min(std::max(force, 0.0f), 1.0f);
+		//force - std::min(std::max(force, 0.0f), 1.0f);
 
-		if (intersectX > intersectY)
-		{
-			if (deltaX > 0.0f)
-			{
-				Move(intersectX = (1.0f - force), 0.0f);
-				other.Move(intersectX * force, 0.0f);
-			}
-			else
-			{
-				Move(intersectX = (1.0f - force), 0.0f);
-				other.Move(intersectX * force, 0.0f);
-			}
-		}
-		else
-		{
-			if (deltaY > 0.0f)
-			{
-				Move(intersectY = 0.0f, (1.0f - force));
-				other.Move(0.0f, intersectY * force);
-			}
-			else
-			{
-				Move(intersectY = 0.0f, (1.0f - force));
-				other.Move(0.0f, intersectY * force);
-			}
-		}
+		//if (intersectX > intersectY)
+		//{
+		//	if (deltaX > 0.0f)
+		//	{
+		//		Move(intersectX = (1.0f - force), 0.0f);
+		//		other.Move(intersectX * force, 0.0f);
+		//	}
+		//	else
+		//	{
+		//		Move(intersectX = (1.0f - force), 0.0f);
+		//		other.Move(intersectX * force, 0.0f);
+		//	}
+		//}
+		//else
+		//{
+		//	if (deltaY > 0.0f)
+		//	{
+		//		Move(intersectY = 0.0f, (1.0f - force));
+		//		other.Move(0.0f, intersectY * force);
+		//	}
+		//	else
+		//	{
+		//		Move(intersectY = 0.0f, (1.0f - force));
+		//		other.Move(0.0f, intersectY * force);
+		//	}
+		//}
 
 		return true;
 	}

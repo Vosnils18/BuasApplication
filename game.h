@@ -29,7 +29,8 @@ public:
 	static bool mouseClicked;
 
 	void SetTarget( Surface* surface ) { screen = surface; }
-	void Init(SDL_Window* win);
+	void Init();
+	void Start();
 	void Shutdown();
 	void Tick( float deltaTime );
 	void MouseUp(int button);
@@ -37,6 +38,7 @@ public:
 	void MouseMove(int x, int y);
 	void KeyUp(int key){}
 	void KeyDown(int key){}
+	void Reset();
 private:
 	/* windowing */
 	Surface* screen = nullptr;

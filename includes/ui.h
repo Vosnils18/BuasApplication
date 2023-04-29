@@ -36,9 +36,16 @@ private:
 class Button
 {
 public: 
-	Button(char* text, Surface* screen, Pixel buttonColor, Pixel textColor, vec2 position);
+	Button(char* text, Pixel buttonColor, Pixel textColor);
+
+	void Create(Surface* screen, vec2 position);
+
+	bool CheckPosition(vec2 mousePos);
 
 private:
+	int boxWidth;
+	int boxHeight;
+
 	vec2 position;
 	char* text;
 	Pixel buttonColor;

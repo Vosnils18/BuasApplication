@@ -23,7 +23,7 @@ Player::Player(Sprite* spriteIdle, Sprite* spriteIdleRed, Sprite* spriteRun, Spr
 	height = activeSprite->GetHeight();
 	
 	this->position = vec2(32, 32);
-	this->health = FULLHP;
+	this->health = health;
 	this->invincibilityTimer = 0;
 }
 

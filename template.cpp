@@ -366,7 +366,7 @@ int main(int argc, char** argv)
 #endif
 		if (firstframe)
 		{
-			game->Init(window);
+			game->Init();
 			firstframe = false;
 		}
 		// calculate frame time and pass it to game->Tick
