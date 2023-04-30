@@ -38,13 +38,12 @@ namespace Tmpl8
 	std::vector<Bullet*> bullets;
 	std::vector<Enemy*> enemies;
 	std::vector<Heart*> hearts;
-	int counter = 10;
+	int counter = 5;
 
 	//Mouse state
 	float Game::mx = 0;
 	float Game::my = 0;
 	bool Game::mouseClicked = false;
-	int attackTimer = 0;
 
 	//Create player
 	Player player(playerSpriteIdle, playerSpriteIdleRed, playerSpriteRun, playerSpriteRunRed);
@@ -124,16 +123,37 @@ namespace Tmpl8
 	{
 		for (size_t i = 0; i < bullets.size(); i++)
 		{
-			bullets[1]->destroy = true;
+			bullets[i]->destroy = true;
 		}
 		for (size_t i = 0; i < enemies.size(); i++)
 		{
 			enemies[i]->destroy =true;
 		}
-		//for (size_t i = 0; i < hearts.size(); i++)
-		//{
-		//	delete hearts[i];
-		//}
+
+		// Remove deleted bullets.
+		auto deleteDestroyedBullet = [](Bullet* b)
+		{
+			if (b->destroy)
+			{
+				delete b;
+				return true;
+			}
+			return false;
+		};
+		bullets.erase(std::remove_if(bullets.begin(), bullets.end(), deleteDestroyedBullet), bullets.end());
+
+		// Remove deleted enemies.
+		auto deleteDestroyedEnemy = [](Enemy* e)
+		{
+			if (e->destroy)
+			{
+				delete e;
+				return true;
+			}
+			return false;
+		};
+		enemies.erase(std::remove_if(enemies.begin(), enemies.end(), deleteDestroyedEnemy), enemies.end());
+
 		auto deleteDestroyedHeart = [](Heart* h)
 		{
 			delete h;
@@ -182,33 +202,30 @@ namespace Tmpl8
 
 			Score score(currentScore);
 
-			//Mouse position and calculating normalised aim direction.
+			//Mouse position
 			vec2 mousePos = vec2(mx, my);
-			vec2 aimDir = mousePos - player.position;
-			vec2 aimDirNorm = aimDir.normalized();
 
 			//give velocity to bullet when clicked and put bullet object in bullet vector.
 			if (mouseClicked)
 			{
-				if (attackTimer == 0)
+				if (player.attackTimer == 0)
 				{
-					bullets.emplace_back(new Bullet(bulletSprite, player.position, mousePos, aimDirNorm));
-					attackTimer += 15;
+					bullets.emplace_back(new Bullet(bulletSprite, player.position, mousePos, false));
+					player.attackTimer += 15;
 				}
 			}
-			if (attackTimer > 0)
+			if (player.attackTimer > 0)
 			{
-
-				attackTimer = attackTimer - 1 * (deltaTime / 10);
+				player.attackTimer = player.attackTimer - 1 * (deltaTime / 10);
 			}
 
 			//Move entities while checking collision with others, then draw them to the screen.
 			for (size_t i = 0; i < enemies.size(); i++)
 			{
-				enemies[i]->Update();
+				enemies[i]->Update(deltaTime, player.position);
 				for (size_t j = 0; j < bullets.size(); j++)
 				{
-					if (enemies[i]->GetCollider().CheckCollision(bullets[j]->GetCollider(), 1.0f))
+					if (enemies[i]->GetCollider().CheckCollision(bullets[j]->GetCollider(), 1.0f) && !bullets[j]->enemyBullet)
 					{
 						bullets[j]->destroy = true;
 						enemies[i]->destroy = true;
@@ -220,15 +237,26 @@ namespace Tmpl8
 					player.DealDamage(1);
 				}
 
+				std::cout << enemies[i]->followPlayer << std::endl;
+				if (enemies[i]->attackTimer == 0 && enemies[i]->followPlayer)
+				{
+					bullets.emplace_back(new Bullet(bulletSprite, enemies[i]->position, player.position, true));
+					enemies[i]->attackTimer += rand() % 400 + 50;
+				}
+
 				enemies[i]->Draw(screen);
 			}
 
 			for (size_t i = 0; i < bullets.size(); i++)
 			{
 				bullets[i]->Move(screen);
+				if (bullets[i]->GetCollider().CheckCollision(player.GetCollider(), 2.0f) && bullets[i]->enemyBullet)
+				{
+					player.DealDamage(1);
+				}
 			}
 
-			player.Update();
+			player.Update(deltaTime);
 			player.Draw(screen);
 			score.Update(currentScore, screen);
 

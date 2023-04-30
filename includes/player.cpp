@@ -5,7 +5,7 @@
 using namespace Tmpl8;
 
 constexpr int FULLHP = 6;
-constexpr float MOVESPEED = 1.2;
+constexpr float MOVESPEED = 1.5;
 
 Player::Player(Sprite* spriteIdle, Sprite* spriteIdleRed, Sprite* spriteRun, Sprite* spriteRunRed)
 {
@@ -25,9 +25,10 @@ Player::Player(Sprite* spriteIdle, Sprite* spriteIdleRed, Sprite* spriteRun, Spr
 	this->position = vec2(32, 32);
 	this->health = health;
 	this->invincibilityTimer = 0;
+	this->attackTimer = 0;
 }
 
-void Player::Update()
+void Player::Update(float deltaTime)
 {
 	if (running)
 	{
@@ -94,6 +95,11 @@ void Player::Update()
 	if (position.x > BufferWidth - 16 - width) { position.x = BufferWidth - 16 - width; }
 	if (position.y < 16 - 5) { position.y = 16 - 5; }
 	if (position.y > BufferHeight - 16 - height) { position.y = BufferHeight - 16 - height; }
+
+	if (attackTimer > 0)
+	{
+		attackTimer = attackTimer - 1 * (deltaTime / 10);
+	}
 }
 
 void Player::Draw(Tmpl8::Surface* screen)

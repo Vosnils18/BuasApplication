@@ -12,7 +12,7 @@ class Player
 public:
 	Player(Sprite* spriteIdle, Sprite* spriteIdleRed, Sprite* spriteRun, Sprite* spriteRunRed);
 	
-	void Update();
+	void Update(float deltaTime);
 
 	void Draw(Surface* screen);
 
@@ -25,6 +25,7 @@ public:
 
 	vec2 position;
 	int health;
+	int attackTimer;
 
 private:
 	Sprite* spriteIdle = nullptr;

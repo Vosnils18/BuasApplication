@@ -13,7 +13,7 @@ public:
 
 	void setPosition(vec2 pos);
 
-	void Update();
+	void Update(float deltaTime, vec2 playerPos);
 
 	void Draw(Tmpl8::Surface* screen);
 
@@ -22,14 +22,21 @@ public:
 		return Collider(position, vec2(width, height));
 	}
 
+	bool playerInRange(float low, float high, float x)
+	{
+		return (low <= x && x <= high);
+	}
+
 	bool destroy = false;
+	vec2 position;
+	int attackTimer;
+	bool followPlayer;
 
 private:
 	Sprite* spriteIdle = nullptr;
 	Sprite* spriteRun = nullptr;
 	Sprite* activeSprite = nullptr;
 
-	vec2 position;
 	int enemyMoveTimer;
 	int direction;
 	

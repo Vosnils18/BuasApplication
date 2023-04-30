@@ -4,26 +4,29 @@
 
 using namespace Tmpl8;
 
-Bullet::Bullet(Sprite* sprite, vec2 playerPos, vec2 mousePos, vec2 directionNorm)
+Bullet::Bullet(Sprite* sprite, vec2 posOrigin, vec2 posDestination, bool enemyBullet)
 {
 	this->sprite = sprite;
-	this->position = playerPos;
-	this->newPosition = newPosition;
+	this->position = posOrigin;
 	this->width = sprite->GetWidth();
 	this->height = sprite->GetHeight();
+	this->enemyBullet = enemyBullet;
 
-	currentv = directionNorm * maxSpeed;
+	//calculating the angle at which the bullet shoul fly
+	vec2 aimDir = posDestination - posOrigin;
+	this->aimDirNorm = aimDir.normalized();
+	currentv = aimDirNorm * maxSpeed;
 
 	//this->body.setPosition(position);
 	//this->body.setSize(vec2(width, height));
 }
 
-//void Bullet::setPosition(vec2 playerPos)
+//void Bullet::setPosition(vec2 posOrigin)
 //{
 //	if (newPosition == zero)
 //	{
-//		position.x = playerPos.x;
-//		position.y = playerPos.y;
+//		position.x = posOrigin.x;
+//		position.y = posOrigin.y;
 //	}
 //}
 
