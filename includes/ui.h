@@ -26,11 +26,11 @@ class Score
 public:
 	Score(int score);
 
-	void Update(int score);
+	void Update(int score, Surface* screen);
 
 private: 
-	Font* font = nullptr;
 	int score;
+	std::string scoreText;
 };
 
 class Button
@@ -40,7 +40,7 @@ public:
 
 	void Create(Surface* screen, vec2 position);
 
-	bool CheckPosition(vec2 mousePos);
+	bool CheckPosition(vec2 mousePos, bool mouseClicked);
 
 private:
 	int boxWidth;
@@ -48,6 +48,7 @@ private:
 
 	vec2 position;
 	char* text;
+	Pixel defaultButtonColor;
 	Pixel buttonColor;
 	Pixel textColor;
 };

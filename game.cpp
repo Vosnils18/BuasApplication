@@ -55,17 +55,25 @@ namespace Tmpl8
 	void Game::Init()
 	{
 		gameState = 0;
-		srand(static_cast<unsigned int>(time(0)));
 	}
 
 	void Game::Start()
 	{
+		srand(time(NULL));
+		int* randomNumbersX = new int[counter];
+		int* randomNumbersY = new int[counter];
 		//Create enemies
+
+		for (size_t i = 0; i < counter; i++)
+		{
+			randomNumbersX[i] = rand() % (BufferWidth - 16) + 16; 
+			randomNumbersY[i] = rand() % (BufferHeight - 16) + 16;
+		}
 		for (size_t i = 0; i < counter; i++)
 		{
 			enemies.emplace_back(new Enemy(enemySpriteIdle, enemySpriteRun));
-			vec2 randomNumber = vec2((rand() % (BufferWidth - 16)) + 16, (rand() % (BufferHeight - 16)) + 16);
-			enemies[i]->setPosition(randomNumber);
+			enemies[i]->setPosition(vec2(randomNumbersX[i], randomNumbersY[i]));
+			std::cout << randomNumbersX[i] << std::endl;
 		}
 
 		player.health = FULLHP;
@@ -133,6 +141,30 @@ namespace Tmpl8
 		};
 		hearts.erase(std::remove_if(hearts.begin(), hearts.end(), deleteDestroyedHeart), hearts.end());
 	}
+
+	void Game::NextLevel()
+	{
+		player.position = vec2(32, 32);
+		
+		counter = counter + 2;
+		
+		srand(time(NULL));
+		int* randomNumbersX = new int[counter];
+		int* randomNumbersY = new int[counter];
+		//Create enemies
+
+		for (size_t i = 0; i < counter; i++)
+		{
+			randomNumbersX[i] = rand() % (BufferWidth - 16) + 16;
+			randomNumbersY[i] = rand() % (BufferHeight - 16) + 16;
+		}
+		for (size_t i = 0; i < counter; i++)
+		{
+			enemies.emplace_back(new Enemy(enemySpriteIdle, enemySpriteRun));
+			enemies[i]->setPosition(vec2(randomNumbersX[i], randomNumbersY[i]));
+			std::cout << randomNumbersX[i] << std::endl;
+		}
+	}
 	
 	void Game::Tick(float deltaTime)
 	{
@@ -147,6 +179,8 @@ namespace Tmpl8
 		case 1:
 		{
 			background.CopyTo(screen, 0, 0);
+
+			Score score(currentScore);
 
 			//Mouse position and calculating normalised aim direction.
 			vec2 mousePos = vec2(mx, my);
@@ -196,6 +230,8 @@ namespace Tmpl8
 
 			player.Update();
 			player.Draw(screen);
+			score.Update(currentScore, screen);
+
 
 			for (size_t i = 0; i < hearts.size(); i++)
 			{
@@ -229,6 +265,14 @@ namespace Tmpl8
 			};
 			enemies.erase(std::remove_if(enemies.begin(), enemies.end(), deleteDestroyedEnemy), enemies.end());
 
+
+			if (enemies.size() < 1)
+			{
+				//screen->Print("LEVEL UP!", 64, 64, 0xFFFFFF);
+				NextLevel();
+				
+			}
+
 			if (player.health <= 0)
 			{
 				gameState = 2;
@@ -252,13 +296,10 @@ namespace Tmpl8
 			screen->Print("Game Over", tx, ty, 255);
 
 			restartButton->Create(screen, vec2(BoxX1, BoxY1 + (boxHeight * 2)));
-			if (mouseClicked)
+			if (restartButton->CheckPosition(vec2(mx, my), mouseClicked))
 			{
-				if (restartButton->CheckPosition(vec2(mx, my)))
-				{
-					Reset();
-					gameState = 0;
-				}
+				Reset();
+				gameState = 0;
 			}
 			break;
 		}

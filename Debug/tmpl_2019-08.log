@@ -5,12 +5,16 @@ C:\my_projects\BuasApplication\BuasApplication\includes\bullet.h(23,41): warning
 C:\my_projects\BuasApplication\BuasApplication\includes\bullet.h(23,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\my_projects\BuasApplication\BuasApplication\includes\enemy.h(22,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\my_projects\BuasApplication\BuasApplication\includes\enemy.h(22,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(67,96): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(67,59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(168,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(202,39): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(248,11): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(249,11): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(254,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(254,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(62,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(75,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(75,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(151,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(164,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(164,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(202,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(238,39): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(292,11): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(293,11): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(298,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(298,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   tmpl_2019-08.vcxproj -> C:\my_projects\BuasApplication\BuasApplication\tmpl_2019-08_x64_debug.exe

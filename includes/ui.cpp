@@ -1,4 +1,5 @@
 #include "ui.h"
+#include <string>
 
 Heart::Heart(Sprite* sprite)
 {
@@ -32,16 +33,27 @@ void Heart::Draw(Surface* screen)
 	sprite->Draw(screen, position.x, position.y);
 }
 
+
 Score::Score(int score)
 {
-	this->score = score;
+	this->score = 0;
+	this->scoreText = "Score: ";
+}
+
+void Score::Update(int score, Surface* screen)
+{
+	std::string scoreC = scoreText + std::to_string(score);
+	const char* outputC = scoreC.data();
+	char* output = (char*)outputC;
+	screen->Print(output, BufferWidth - 70, 10, 0xFFFFFF);
 }
 
 
 Button::Button(char* text, Pixel buttonColor, Pixel textColor)
 {
 	this->position = position;
-	this->buttonColor = buttonColor;
+	this->defaultButtonColor = buttonColor;
+	this->buttonColor = defaultButtonColor;
 	this->textColor = textColor;
 	this->text = text;
 }
@@ -59,17 +71,37 @@ void Button::Create(Surface* screen, vec2 position)
 	screen->Print(text, tx, ty, textColor);
 }
 
-bool Button::CheckPosition(vec2 mousePos)
+bool Button::CheckPosition(vec2 mousePos, bool mouseclicked)
 {
-	if (mousePos.x > position.x && mousePos.x < (position.x + boxWidth))
+	if (mouseclicked)
 	{
-		if (mousePos.y > position.y && mousePos.y < (position.y + boxHeight))
+		if (mousePos.x > position.x && mousePos.x < (position.x + boxWidth))
 		{
-			return true;
+			if (mousePos.y > position.y && mousePos.y < (position.y + boxHeight))
+			{
+				return true;
+			}
 		}
 	}
 	else
 	{
-		return false;
+		if (mousePos.x > position.x && mousePos.x < (position.x + boxWidth))
+		{
+			if (mousePos.y > position.y && mousePos.y < (position.y + boxHeight))
+			{
+				buttonColor = 0xff0000;
+				return false;
+			}
+			else
+			{
+				buttonColor = defaultButtonColor;
+				return false;
+			}
+		}
+		else
+		{
+			buttonColor = defaultButtonColor;
+			return false;
+		}
 	}
 }

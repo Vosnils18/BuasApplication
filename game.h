@@ -39,6 +39,7 @@ public:
 	void KeyUp(int key){}
 	void KeyDown(int key){}
 	void Reset();
+	void NextLevel();
 private:
 	/* windowing */
 	Surface* screen = nullptr;
