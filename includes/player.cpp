@@ -65,7 +65,6 @@ void Player::Update(float deltaTime)
 	}
 	else { running = false; }
 
-
 	activeSprite->SetFrame(animationFrame / 10);
 	
 	if (!lookingLeft)

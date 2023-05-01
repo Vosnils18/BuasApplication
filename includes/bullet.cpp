@@ -12,8 +12,8 @@ Bullet::Bullet(Sprite* sprite, vec2 posOrigin, vec2 posDestination, bool enemyBu
 	this->sprite = sprite;
 	this->position = posOrigin;
 	this->posOrigin = posOrigin;
-	this->width = sprite->GetWidth();
-	this->height = sprite->GetHeight();
+	this->width = 6;
+	this->height = 6;
 	this->enemyBullet = enemyBullet;
 	if (this->enemyBullet)
 	{
@@ -47,6 +47,8 @@ void Bullet::Move(Surface* screen)
 {
 	position += currentv;
 	vec2 travelDistance = position - posOrigin;
+	positionHitBox.x = position.x + 5;
+	positionHitBox.y = position.y + 7;
 
 	if (position.x < TILESIZE || position.x > BufferWidth - TILESIZE || position.y < TILESIZE || position.y > BufferHeight - TILESIZE)
 	{

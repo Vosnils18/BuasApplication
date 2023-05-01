@@ -1,6 +1,6 @@
 ﻿  bullet.cpp
-C:\my_projects\BuasApplication\BuasApplication\includes\bullet.h(23,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\bullet.h(23,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\bullet.cpp(74,43): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\bullet.cpp(74,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\includes\bullet.h(23,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\includes\bullet.h(23,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\includes\bullet.cpp(76,43): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\includes\bullet.cpp(76,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   tmpl_2019-08.vcxproj -> C:\my_projects\BuasApplication\BuasApplication\tmpl_2019-08_x64_debug.exe

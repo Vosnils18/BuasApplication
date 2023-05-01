@@ -23,20 +23,26 @@ namespace Tmpl8
 	//Create Sprites and background
 	Surface background("assets/theRealOne/Level_0.png");
 	
+	//player sprites
 	Sprite* playerSpriteIdle(new Sprite(new Surface("assets/theRealOne/Wizard_run.png"), 8));
 	Sprite* playerSpriteRun(new Sprite(new Surface("assets/theRealOne/Wizard_idle.png"), 8));
 	Sprite* playerSpriteIdleRed(new Sprite(new Surface("assets/theRealOne/Wizard_run_Red.png"), 8));
 	Sprite* playerSpriteRunRed(new Sprite(new Surface("assets/theRealOne/Wizard_idle_Red.png"), 8));
 	
+	//miscellaneous sprites
 	Sprite* bulletSprite(new Sprite(new Surface("assets/theRealOne/Bullet.png"), 2));
 	Sprite* heartSprite(new Sprite(new Surface("assets/theRealOne/Hearts.png"), 3));
 	Sprite* trapDoorSprite(new Sprite(new Surface("assets/theRealOne/Trapdoor.png"), 1));
 	
+	//enemy sprites
 	Sprite* enemySpriteIdle(new Sprite(new Surface("assets/theRealOne/Imp_idle.png"), 8));
 	Sprite* enemySpriteRun(new Sprite(new Surface("assets/theRealOne/Imp_run.png"), 8));
 
-	Button* restartButton(new Button("Restart Game", 0, 0xffffff));
+	//buttons
+	Button* restartButton(new Button("Restart Game", 0x000000, 0xffffff));
+	Button* startButton(new Button("Start Game", 0x000000, 0xffffff));
 	
+	//Vectors for bullets, enemies and hearts to be stored in
 	std::vector<Bullet*> bullets;
 	std::vector<Enemy*> enemies;
 	std::vector<Heart*> hearts;
@@ -62,22 +68,9 @@ namespace Tmpl8
 
 	void Game::Start()
 	{
-		srand(time(NULL));
-		int* randomNumbersX = new int[counter];
-		int* randomNumbersY = new int[counter];
-		//Create enemies
+		CreateEnemies(counter);
 
-		for (size_t i = 0; i < counter; i++)
-		{
-			randomNumbersX[i] = rand() % (BufferWidth - 16) + 16; 
-			randomNumbersY[i] = rand() % (BufferHeight - 16) + 16;
-		}
-		for (size_t i = 0; i < counter; i++)
-		{
-			enemies.emplace_back(new Enemy(enemySpriteIdle, enemySpriteRun, i));
-			enemies[i]->setPosition(vec2(randomNumbersX[i], randomNumbersY[i]));
-		}
-
+		//set player health and position
 		player.health = FULLHP;
 		player.position = vec2(32, 32);
 		for (size_t i = 0; i < FULLHP / 2; i++)
@@ -103,17 +96,19 @@ namespace Tmpl8
 		{
 			delete hearts[i];
 		}
+		delete trapdoor;
 	}
 
+	//function is called every time mouse moves. Saves mouse coordinates oin mx, my
 	void Game::MouseMove(int x, int y)
 	{
-		//Store updated mouse position
 		float sx = static_cast<float>(ScreenWidth) / BufferWidth;
 		float sy = static_cast<float>(ScreenHeight) / BufferHeight;
 
 		Game::mx += x / sx;
 		Game::my += y / sy;
 	}
+	//funcions called when mouse is clicked and released, updates mouseClicked bool
 	void Game::MouseDown(int button)
 	{
 		if (button == 1) { Game::mouseClicked = true; }
@@ -123,10 +118,30 @@ namespace Tmpl8
 		if (button == 1) { Game::mouseClicked = false; }
 	}
 
+	void Game::CreateEnemies(int counter)
+	{
+		//put random numbers in 2 different arrays for the x and y coordinates of every enemy to be pulled from
+		srand(static_cast<unsigned int>(time(0)));
+		int* randomNumbersX = new int[counter];
+		int* randomNumbersY = new int[counter];
+		for (size_t i = 0; i < counter; i++)
+		{
+			randomNumbersX[i] = rand() % (BufferWidth - 16) + 16;
+			randomNumbersY[i] = rand() % (BufferHeight - 16) + 16;
+		}
+
+		//create enemies and place them in vector
+		for (size_t i = 0; i < counter; i++)
+		{
+			enemies.emplace_back(new Enemy(enemySpriteIdle, enemySpriteRun, i));
+			enemies[i]->setPosition(vec2(randomNumbersX[i], randomNumbersY[i]));
+		}
+	}
+
+	//function called on restart, deletes all existing objects
 	void Game::Reset()
 	{
 		counter = 5;
-
 		delete trapdoor;
 
 		for (size_t i = 0; i < bullets.size(); i++)
@@ -173,40 +188,31 @@ namespace Tmpl8
 	void Game::NextLevel()
 	{
 		trapdoor->SetPosition();
-		player.position = vec2(32, 32);
-		
+		player.position = player.position;
 		counter = counter + 2;
 		
-		srand(time(NULL));
-		int* randomNumbersX = new int[counter];
-		int* randomNumbersY = new int[counter];
-		//Create enemies
-
-		for (size_t i = 0; i < counter; i++)
-		{
-			randomNumbersX[i] = rand() % (BufferWidth - 16) + 16;
-			randomNumbersY[i] = rand() % (BufferHeight - 16) + 16;
-		}
-		for (size_t i = 0; i < counter; i++)
-		{
-			enemies.emplace_back(new Enemy(enemySpriteIdle, enemySpriteRun, i));
-			enemies[i]->setPosition(vec2(randomNumbersX[i], randomNumbersY[i]));
-		}
+		CreateEnemies(counter);
 	}
 	
+
+
 	void Game::Tick(float deltaTime)
 	{
 		switch (gameState)
 		{
 		case 0:
-			Start();
-			gameState = 1;
+			screen->Clear(255);
+			startButton->Create(screen, vec2(300, 350));
+			if (startButton->CheckPosition(vec2(mx, my), mouseClicked))
+			{
+				Start();
+				gameState = 1;
+			}
 			break;
 
 		case 1:
 		{
 			background.CopyTo(screen, 0, 0);
-
 			Score score(currentScore);
 
 			//Mouse position
@@ -221,17 +227,15 @@ namespace Tmpl8
 					player.attackTimer += 2 * deltaTime;
 				}
 			}
-			if (player.attackTimer > 0)
-			{
-				player.attackTimer = player.attackTimer - 1 * (deltaTime / 10);
-			}
 
 			//Move entities while checking collision with others, then draw them to the screen.
 			for (size_t i = 0; i < enemies.size(); i++)
 			{
 				enemies[i]->Update(deltaTime, player.position);
+				
 				for (size_t j = 0; j < bullets.size(); j++)
 				{
+					//check collision between bullets and enemies, and if true, destroy both
 					if (enemies[i]->GetCollider().CheckCollision(bullets[j]->GetCollider(), 1.0f) && !bullets[j]->enemyBullet)
 					{
 						bullets[j]->destroy = true;
@@ -239,11 +243,13 @@ namespace Tmpl8
 					}
 				}
 
+				//check collision between enemies and player
 				if (enemies[i]->GetCollider().CheckCollision(player.GetCollider(), 2.0f))
 				{
 					player.DealDamage(1);
 				}
 
+				//check conditions for enemy attack and fire bullet towards player if conditions are right
 				if (enemies[i]->attackTimer == 0 && enemies[i]->followPlayer && enemies[i]->isShooter % 4 == 0)
 				{
 					bullets.emplace_back(new Bullet(bulletSprite, enemies[i]->position, player.position, true));
@@ -253,6 +259,7 @@ namespace Tmpl8
 				enemies[i]->Draw(screen);
 			}
 
+			//ccheck collision between player and bullets fired by enemies
 			for (size_t i = 0; i < bullets.size(); i++)
 			{
 				bullets[i]->Move(screen);
@@ -273,7 +280,7 @@ namespace Tmpl8
 				hearts[i]->Draw(screen);
 			}
 
-			// Remove deleted bullets.
+			// delete and remove destroyed bullets from vector
 			auto deleteDestroyedBullet = [](Bullet* b)
 			{
 				if (b->destroy)
@@ -285,7 +292,7 @@ namespace Tmpl8
 			};
 			bullets.erase(std::remove_if(bullets.begin(), bullets.end(), deleteDestroyedBullet), bullets.end());
 
-			// Remove deleted enemies.
+			// delete and remove destroyed enemies from vector
 			auto deleteDestroyedEnemy = [](Enemy* e)
 			{
 				if (e->destroy)
@@ -299,7 +306,7 @@ namespace Tmpl8
 			};
 			enemies.erase(std::remove_if(enemies.begin(), enemies.end(), deleteDestroyedEnemy), enemies.end());
 
-
+			//advance to next level when all enemies have been defeated
 			if (enemies.size() < 1)
 			{
 				trapdoor->Draw(screen);
@@ -310,6 +317,7 @@ namespace Tmpl8
 				}
 			}
 
+			//end game if player health reaches 0
 			if (player.health <= 0)
 			{
 				gameState = 2;

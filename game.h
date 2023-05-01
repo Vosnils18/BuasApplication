@@ -40,6 +40,7 @@ public:
 	void KeyDown(int key){}
 	void Reset();
 	void NextLevel();
+	void CreateEnemies(int counter);
 private:
 	/* windowing */
 	Surface* screen = nullptr;

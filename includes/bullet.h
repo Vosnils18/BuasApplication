@@ -20,7 +20,7 @@ public:
 
 	Collider GetCollider() 
 	{ 
-		return Collider(position, vec2(width, height)); 
+		return Collider(positionHitBox, vec2(width, height)); 
 	}
 
 	bool destroy = false;
@@ -36,4 +36,5 @@ private:
 
 	int width, height;
 	vec2 position;
+	vec2 positionHitBox;
 };
