@@ -4,20 +4,22 @@
 #include "../template.h"
 
 using namespace Tmpl8;
+constexpr int INRANGE = 50;
 
-Enemy::Enemy(Sprite* spriteIdle, Sprite* spriteRun)
+Enemy::Enemy(Sprite* spriteIdle, Sprite* spriteRun, int isShooter)
 {
+	srand(static_cast<unsigned int>(time(0)));
 	this->spriteIdle = spriteIdle;
 	this->spriteRun = spriteRun;
 	this->spriteIdle = spriteIdle;
 
 	this->position = position;
-	/*srand(static_cast<unsigned int>(time(0)));*/
 	this->attackTimer = rand() % 200 + 100;
+	this->isShooter = isShooter;
 
 	this->speed = 5.0f;
-	this->width = 16;
-	this->height = 16;
+	this->width = 10;
+	this->height = 12;
 	
 	this->enemyMoveTimer = 0;
 	this->direction = 1;
@@ -47,9 +49,8 @@ void Enemy::Update(float deltaTime, vec2 playerPos)
 	
 	vec2 pathToPlayer = playerPos - position;
 	vec2 aimDirNorm = pathToPlayer.normalized();
-	std::cout << pathToPlayer.x << pathToPlayer.y << std::endl;
 
-	if ((- 30 <= pathToPlayer.x && pathToPlayer.x <= 30) || (-30 <= pathToPlayer.y && pathToPlayer.y <= 30))
+	if ((-INRANGE <= pathToPlayer.x && pathToPlayer.x <= INRANGE) || (-INRANGE <= pathToPlayer.y && pathToPlayer.y <= INRANGE))
 	{
 		followPlayer = true;
 		if (pathToPlayer.x > 0)
@@ -112,6 +113,9 @@ void Enemy::Update(float deltaTime, vec2 playerPos)
 	{
 		attackTimer = attackTimer - 1 * (deltaTime / 10);
 	}
+
+	positionHitBox.x = position.x + 4;
+	positionHitBox.y = position.y + 3;
 }
 
 void Enemy::Draw(Tmpl8::Surface* screen)

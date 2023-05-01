@@ -81,6 +81,14 @@ bool Button::CheckPosition(vec2 mousePos, bool mouseclicked)
 			{
 				return true;
 			}
+			else
+			{
+				return false;
+			}
+		}
+		else 
+		{
+			return false;
 		}
 	}
 	else

@@ -9,7 +9,7 @@ using namespace Tmpl8;
 class Enemy
 {
 public:
-	Enemy(Sprite* spriteIdle, Sprite* spriteRun);
+	Enemy(Sprite* spriteIdle, Sprite* spriteRun, int isShooter);
 
 	void setPosition(vec2 pos);
 
@@ -19,7 +19,7 @@ public:
 
 	Collider GetCollider() 
 	{
-		return Collider(position, vec2(width, height));
+		return Collider(positionHitBox, vec2(width, height));
 	}
 
 	bool playerInRange(float low, float high, float x)
@@ -31,6 +31,7 @@ public:
 	vec2 position;
 	int attackTimer;
 	bool followPlayer;
+	int isShooter;
 
 private:
 	Sprite* spriteIdle = nullptr;
@@ -39,6 +40,7 @@ private:
 
 	int enemyMoveTimer;
 	int direction;
+	vec2 positionHitBox;
 	
 	bool running;
 	int animationFrame;

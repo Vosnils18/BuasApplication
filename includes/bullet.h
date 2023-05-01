@@ -25,12 +25,13 @@ public:
 
 	bool destroy = false;
 	bool enemyBullet = false;
+	vec2 posOrigin;
 
 private:
 	Sprite* sprite = nullptr;
 
 	vec2 currentv;
-	float maxSpeed = 7.0f;
+	float maxSpeed;
 	vec2 aimDirNorm;
 
 	int width, height;

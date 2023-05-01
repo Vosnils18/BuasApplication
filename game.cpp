@@ -14,6 +14,7 @@
 #include "includes/bullet.h"
 #include "includes/enemy.h"
 #include "includes/ui.h"
+#include "includes/trapdoor.h"
 
 constexpr int FULLHP = 6;
 
@@ -29,6 +30,7 @@ namespace Tmpl8
 	
 	Sprite* bulletSprite(new Sprite(new Surface("assets/theRealOne/Bullet.png"), 2));
 	Sprite* heartSprite(new Sprite(new Surface("assets/theRealOne/Hearts.png"), 3));
+	Sprite* trapDoorSprite(new Sprite(new Surface("assets/theRealOne/Trapdoor.png"), 1));
 	
 	Sprite* enemySpriteIdle(new Sprite(new Surface("assets/theRealOne/Imp_idle.png"), 8));
 	Sprite* enemySpriteRun(new Sprite(new Surface("assets/theRealOne/Imp_run.png"), 8));
@@ -47,6 +49,8 @@ namespace Tmpl8
 
 	//Create player
 	Player player(playerSpriteIdle, playerSpriteIdleRed, playerSpriteRun, playerSpriteRunRed);
+
+	TrapDoor* trapdoor;
 
 	int currentScore;
 	int gameState;
@@ -70,9 +74,8 @@ namespace Tmpl8
 		}
 		for (size_t i = 0; i < counter; i++)
 		{
-			enemies.emplace_back(new Enemy(enemySpriteIdle, enemySpriteRun));
+			enemies.emplace_back(new Enemy(enemySpriteIdle, enemySpriteRun, i));
 			enemies[i]->setPosition(vec2(randomNumbersX[i], randomNumbersY[i]));
-			std::cout << randomNumbersX[i] << std::endl;
 		}
 
 		player.health = FULLHP;
@@ -83,6 +86,7 @@ namespace Tmpl8
 		}
 
 		currentScore = 0;
+		trapdoor = new TrapDoor(trapDoorSprite);
 	}
 
 	void Game::Shutdown()
@@ -121,6 +125,10 @@ namespace Tmpl8
 
 	void Game::Reset()
 	{
+		counter = 5;
+
+		delete trapdoor;
+
 		for (size_t i = 0; i < bullets.size(); i++)
 		{
 			bullets[i]->destroy = true;
@@ -164,6 +172,7 @@ namespace Tmpl8
 
 	void Game::NextLevel()
 	{
+		trapdoor->SetPosition();
 		player.position = vec2(32, 32);
 		
 		counter = counter + 2;
@@ -180,9 +189,8 @@ namespace Tmpl8
 		}
 		for (size_t i = 0; i < counter; i++)
 		{
-			enemies.emplace_back(new Enemy(enemySpriteIdle, enemySpriteRun));
+			enemies.emplace_back(new Enemy(enemySpriteIdle, enemySpriteRun, i));
 			enemies[i]->setPosition(vec2(randomNumbersX[i], randomNumbersY[i]));
-			std::cout << randomNumbersX[i] << std::endl;
 		}
 	}
 	
@@ -193,7 +201,6 @@ namespace Tmpl8
 		case 0:
 			Start();
 			gameState = 1;
-			std::cout << "0 to 1" << std::endl;
 			break;
 
 		case 1:
@@ -211,7 +218,7 @@ namespace Tmpl8
 				if (player.attackTimer == 0)
 				{
 					bullets.emplace_back(new Bullet(bulletSprite, player.position, mousePos, false));
-					player.attackTimer += 15;
+					player.attackTimer += 2 * deltaTime;
 				}
 			}
 			if (player.attackTimer > 0)
@@ -237,8 +244,7 @@ namespace Tmpl8
 					player.DealDamage(1);
 				}
 
-				std::cout << enemies[i]->followPlayer << std::endl;
-				if (enemies[i]->attackTimer == 0 && enemies[i]->followPlayer)
+				if (enemies[i]->attackTimer == 0 && enemies[i]->followPlayer && enemies[i]->isShooter % 4 == 0)
 				{
 					bullets.emplace_back(new Bullet(bulletSprite, enemies[i]->position, player.position, true));
 					enemies[i]->attackTimer += rand() % 400 + 50;
@@ -296,9 +302,12 @@ namespace Tmpl8
 
 			if (enemies.size() < 1)
 			{
-				//screen->Print("LEVEL UP!", 64, 64, 0xFFFFFF);
-				NextLevel();
-				
+				trapdoor->Draw(screen);
+
+				if (trapdoor->GetCollider().CheckCollision(player.GetCollider(), 0.0f))
+				{
+					NextLevel();
+				}
 			}
 
 			if (player.health <= 0)
