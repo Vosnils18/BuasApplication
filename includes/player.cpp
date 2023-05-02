@@ -99,6 +99,11 @@ void Player::Update(float deltaTime)
 	{
 		attackTimer = attackTimer - 1 * (deltaTime / 10);
 	}
+
+	if (health > FULLHP)
+	{
+		health = FULLHP;
+	}
 }
 
 void Player::Draw(Tmpl8::Surface* screen)

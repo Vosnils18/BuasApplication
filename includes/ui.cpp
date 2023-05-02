@@ -37,15 +37,26 @@ void Heart::Draw(Surface* screen)
 Score::Score(int score)
 {
 	this->score = 0;
+	this->position = position;
 	this->scoreText = "Score: ";
+	this->floorText = "floor reached: ";
 }
 
-void Score::Update(int score, Surface* screen)
+void Score::Update(int score, Surface* screen, vec2 position)
 {
+	this->position = position;
 	std::string scoreC = scoreText + std::to_string(score);
 	const char* outputC = scoreC.data();
 	char* output = (char*)outputC;
-	screen->Print(output, BufferWidth - 70, 10, 0xFFFFFF);
+	screen->Print(output, position.x, position.y, 0xFFFFFF);
+}
+
+void Score::Floor(int floor, Surface* screen)
+{
+	std::string floorC = floorText + std::to_string(floor);
+	const char* outputC = floorC.data();
+	char* output = (char*)outputC;
+	screen->Print(output, position.x, position.y - 10, 0xFFFFFF);
 }
 
 

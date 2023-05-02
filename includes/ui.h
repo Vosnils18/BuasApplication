@@ -26,11 +26,15 @@ class Score
 public:
 	Score(int score);
 
-	void Update(int score, Surface* screen);
+	void Update(int score, Surface* screen, vec2 position);
+
+	void Floor(int floor, Surface* screen);
 
 private: 
 	int score;
+	vec2 position;
 	std::string scoreText;
+	std::string floorText;
 };
 
 class Button

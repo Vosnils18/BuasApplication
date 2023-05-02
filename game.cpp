@@ -62,7 +62,10 @@ namespace Tmpl8
 	TrapDoor* trapdoor;
 
 	int currentScore;
+	int floorLevel;
 	int gameState;
+
+	Score score(currentScore);
 
 	void Game::Init()
 	{
@@ -100,6 +103,17 @@ namespace Tmpl8
 			delete hearts[i];
 		}
 		delete trapdoor;
+
+		delete playerSpriteIdle;
+		delete playerSpriteIdleRed;
+		delete playerSpriteRun;
+		delete playerSpriteRunRed;
+		delete trapDoorSprite;
+		delete heartSprite;
+		delete healthFlaskSprite;
+		delete enemySpriteIdle;
+		delete enemySpriteRun;
+		delete bulletSprite;
 	}
 
 	//function is called every time mouse moves. Saves mouse coordinates oin mx, my
@@ -139,6 +153,8 @@ namespace Tmpl8
 			enemies.emplace_back(new Enemy(enemySpriteIdle, enemySpriteRun, i));
 			enemies[i]->setPosition(vec2(randomNumbersX[i], randomNumbersY[i]));
 		}
+		delete randomNumbersX;
+		delete randomNumbersY;
 	}
 
 	//function called on restart, deletes all existing objects
@@ -216,6 +232,7 @@ namespace Tmpl8
 		}
 		
 		counter = counter + 2;
+		floorLevel--;
 		
 		CreateEnemies(counter);
 	}
@@ -233,13 +250,13 @@ namespace Tmpl8
 			{
 				Start();
 				gameState = 1;
+				floorLevel = 0;
 			}
 			break;
 
 		case 1:
 		{
 			background.CopyTo(screen, 0, 0);
-			Score score(currentScore);
 
 			//Mouse position
 			vec2 mousePos = vec2(mx, my);
@@ -310,7 +327,8 @@ namespace Tmpl8
 
 			player.Update(deltaTime);
 			player.Draw(screen);
-			score.Update(currentScore, screen);
+			score.Update(currentScore, screen, vec2(BufferWidth -120, 20));
+			score.Floor(floorLevel, screen);
 
 
 			for (size_t i = 0; i < hearts.size(); i++)
@@ -394,6 +412,9 @@ namespace Tmpl8
 
 			screen->Bar(BoxX1, BoxY1, BoxX1 + boxWidth, BoxY1 + boxHeight, 0);
 			screen->Print("Game Over", tx, ty, 255);
+			
+			score.Update(currentScore, screen, vec2(tx, ty - 100));
+			score.Floor(floorLevel, screen);
 
 			restartButton->Create(screen, vec2(BoxX1, BoxY1 + (boxHeight * 2)));
 			if (restartButton->CheckPosition(vec2(mx, my), mouseClicked))

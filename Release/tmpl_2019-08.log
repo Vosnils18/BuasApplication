@@ -1,5 +1,4 @@
-﻿  collider.cpp
-  game.cpp
+﻿  game.cpp
 C:\my_projects\BuasApplication\BuasApplication\includes\player.h(23,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\my_projects\BuasApplication\BuasApplication\includes\player.h(23,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\my_projects\BuasApplication\BuasApplication\includes\bullet.h(23,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
@@ -8,21 +7,18 @@ C:\my_projects\BuasApplication\BuasApplication\includes\enemy.h(22,47): warning 
 C:\my_projects\BuasApplication\BuasApplication\includes\enemy.h(22,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\my_projects\BuasApplication\BuasApplication\includes\trapdoor.h(18,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\my_projects\BuasApplication\BuasApplication\includes\trapdoor.h(18,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(136,70): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(137,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(137,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(190,34): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(228,30): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(280,39): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(338,11): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(339,11): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(344,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\game.cpp(344,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  bullet.cpp
-C:\my_projects\BuasApplication\BuasApplication\includes\bullet.h(23,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\bullet.h(23,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\bullet.cpp(76,43): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\bullet.cpp(76,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\includes\healthflask.h(17,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\includes\healthflask.h(17,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(139,70): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(140,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(140,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(209,33): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(253,30): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(318,39): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(392,11): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(393,11): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(398,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\game.cpp(398,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   enemy.cpp
 C:\my_projects\BuasApplication\BuasApplication\includes\enemy.h(22,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\my_projects\BuasApplication\BuasApplication\includes\enemy.h(22,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
@@ -31,32 +27,10 @@ C:\my_projects\BuasApplication\BuasApplication\includes\enemy.cpp(110,80): warni
 C:\my_projects\BuasApplication\BuasApplication\includes\enemy.cpp(114,29): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\my_projects\BuasApplication\BuasApplication\includes\enemy.cpp(123,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 C:\my_projects\BuasApplication\BuasApplication\includes\enemy.cpp(123,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  player.cpp
-C:\my_projects\BuasApplication\BuasApplication\includes\player.h(23,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\player.h(23,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\player.cpp(94,77): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\player.cpp(96,80): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\player.cpp(100,29): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\player.cpp(106,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\player.cpp(106,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  trapdoor.cpp
-C:\my_projects\BuasApplication\BuasApplication\includes\trapdoor.h(18,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\trapdoor.h(18,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\trapdoor.cpp(21,50): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\trapdoor.cpp(22,52): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\trapdoor.cpp(28,43): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\trapdoor.cpp(28,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  ui.cpp
-C:\my_projects\BuasApplication\BuasApplication\includes\ui.cpp(14,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\ui.cpp(33,43): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\ui.cpp(33,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\ui.cpp(67,9): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\ui.cpp(68,9): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\ui.cpp(70,72): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\ui.cpp(70,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\ui.cpp(70,34): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\my_projects\BuasApplication\BuasApplication\includes\ui.cpp(70,22): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  surface.cpp
-  template.cpp
+  healthflask.cpp
+C:\my_projects\BuasApplication\BuasApplication\includes\healthflask.h(17,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\includes\healthflask.h(17,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\includes\healthflask.cpp(15,43): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\my_projects\BuasApplication\BuasApplication\includes\healthflask.cpp(15,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   Generating Code...
   tmpl_2019-08.vcxproj -> C:\my_projects\BuasApplication\BuasApplication\tmpl_2019-08_x64.exe
