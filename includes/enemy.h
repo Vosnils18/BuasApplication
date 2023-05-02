@@ -27,6 +27,18 @@ public:
 		return (low <= x && x <= high);
 	}
 
+	bool dropsHeart()
+	{
+		if (isShooter % 8 == 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	bool destroy = false;
 	vec2 position;
 	int attackTimer;

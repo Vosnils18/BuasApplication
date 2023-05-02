@@ -226,6 +226,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="includes\bullet.cpp" />
     <ClCompile Include="includes\enemy.cpp" />
+    <ClCompile Include="includes\healthflask.cpp" />
     <ClCompile Include="includes\player.cpp" />
     <ClCompile Include="includes\trapdoor.cpp" />
     <ClCompile Include="includes\ui.cpp" />
@@ -237,6 +238,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="includes\bullet.h" />
     <ClInclude Include="includes\enemy.h" />
+    <ClInclude Include="includes\healthflask.h" />
     <ClInclude Include="includes\player.h" />
     <ClInclude Include="includes\trapdoor.h" />
     <ClInclude Include="includes\ui.h" />

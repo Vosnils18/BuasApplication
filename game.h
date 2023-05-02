@@ -39,7 +39,7 @@ public:
 	void KeyUp(int key){}
 	void KeyDown(int key){}
 	void Reset();
-	void NextLevel();
+	void NextLevel(float deltaTime);
 	void CreateEnemies(int counter);
 private:
 	/* windowing */

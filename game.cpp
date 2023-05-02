@@ -15,6 +15,7 @@
 #include "includes/enemy.h"
 #include "includes/ui.h"
 #include "includes/trapdoor.h"
+#include "includes/healthflask.h"
 
 constexpr int FULLHP = 6;
 
@@ -33,6 +34,7 @@ namespace Tmpl8
 	Sprite* bulletSprite(new Sprite(new Surface("assets/theRealOne/Bullet.png"), 2));
 	Sprite* heartSprite(new Sprite(new Surface("assets/theRealOne/Hearts.png"), 3));
 	Sprite* trapDoorSprite(new Sprite(new Surface("assets/theRealOne/Trapdoor.png"), 1));
+	Sprite* healthFlaskSprite(new Sprite(new Surface("assets/theRealOne/flask_red.png"), 1));
 	
 	//enemy sprites
 	Sprite* enemySpriteIdle(new Sprite(new Surface("assets/theRealOne/Imp_idle.png"), 8));
@@ -46,6 +48,7 @@ namespace Tmpl8
 	std::vector<Bullet*> bullets;
 	std::vector<Enemy*> enemies;
 	std::vector<Heart*> hearts;
+	std::vector<HealthFlask*> flasks;
 	int counter = 5;
 
 	//Mouse state
@@ -152,6 +155,10 @@ namespace Tmpl8
 		{
 			enemies[i]->destroy =true;
 		}
+		for (size_t i = 0; i < flasks.size(); i++)
+		{
+			flasks[i]->destroy = true;
+		}
 
 		// Remove deleted bullets.
 		auto deleteDestroyedBullet = [](Bullet* b)
@@ -164,6 +171,18 @@ namespace Tmpl8
 			return false;
 		};
 		bullets.erase(std::remove_if(bullets.begin(), bullets.end(), deleteDestroyedBullet), bullets.end());
+
+		// delete and remove destroyed healthFlasks from vector
+		auto deleteDestroyedFlask = [](HealthFlask* f)
+		{
+			if (f->destroy)
+			{
+				delete f;
+				return true;
+			}
+			return false;
+		};
+		flasks.erase(std::remove_if(flasks.begin(), flasks.end(), deleteDestroyedFlask), flasks.end());
 
 		// Remove deleted enemies.
 		auto deleteDestroyedEnemy = [](Enemy* e)
@@ -185,10 +204,17 @@ namespace Tmpl8
 		hearts.erase(std::remove_if(hearts.begin(), hearts.end(), deleteDestroyedHeart), hearts.end());
 	}
 
-	void Game::NextLevel()
+	void Game::NextLevel(float deltaTime)
 	{
+		player.invincibilityTimer = 3 * deltaTime;
 		trapdoor->SetPosition();
 		player.position = player.position;
+		
+		for (size_t i = 0; i < flasks.size(); i++)
+		{
+			flasks[i]->destroy = true;
+		}
+		
 		counter = counter + 2;
 		
 		CreateEnemies(counter);
@@ -228,7 +254,7 @@ namespace Tmpl8
 				}
 			}
 
-			//Move entities while checking collision with others, then draw them to the screen.
+			//Move enemies while checking collision with others, then draw them to the screen.
 			for (size_t i = 0; i < enemies.size(); i++)
 			{
 				enemies[i]->Update(deltaTime, player.position);
@@ -269,6 +295,19 @@ namespace Tmpl8
 				}
 			}
 
+			for (size_t i = 0; i < flasks.size(); i++)
+			{
+				if (flasks[i]->GetCollider().CheckCollision(player.GetCollider(), 2.0f))
+				{
+					flasks[i]->destroy = true;
+					if (player.health < FULLHP)
+					{
+						player.health++;
+					}
+				}
+				flasks[i]->Draw(screen);
+			}
+
 			player.Update(deltaTime);
 			player.Draw(screen);
 			score.Update(currentScore, screen);
@@ -292,11 +331,27 @@ namespace Tmpl8
 			};
 			bullets.erase(std::remove_if(bullets.begin(), bullets.end(), deleteDestroyedBullet), bullets.end());
 
+			// delete and remove destroyed healthFlasks from vector
+			auto deleteDestroyedFlask = [](HealthFlask* f)
+			{
+				if (f->destroy)
+				{
+					delete f;
+					return true;
+				}
+				return false;
+			};
+			flasks.erase(std::remove_if(flasks.begin(), flasks.end(), deleteDestroyedFlask), flasks.end());
+
 			// delete and remove destroyed enemies from vector
 			auto deleteDestroyedEnemy = [](Enemy* e)
 			{
 				if (e->destroy)
 				{
+					if (e->dropsHeart())
+					{
+						flasks.emplace_back(new HealthFlask(healthFlaskSprite, e->position));
+					}
 					delete e;
 					currentScore++;
 					std::cout << "Your score: " << currentScore << std::endl;
@@ -313,7 +368,7 @@ namespace Tmpl8
 
 				if (trapdoor->GetCollider().CheckCollision(player.GetCollider(), 0.0f))
 				{
-					NextLevel();
+					NextLevel(deltaTime);
 				}
 			}
 

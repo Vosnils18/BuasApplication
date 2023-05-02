@@ -18,8 +18,8 @@ Enemy::Enemy(Sprite* spriteIdle, Sprite* spriteRun, int isShooter)
 	this->isShooter = isShooter;
 
 	this->speed = 5.0f;
-	this->width = 10;
-	this->height = 12;
+	this->width = 12;
+	this->height = 14;
 	
 	this->enemyMoveTimer = 0;
 	this->direction = 1;
@@ -114,8 +114,8 @@ void Enemy::Update(float deltaTime, vec2 playerPos)
 		attackTimer = attackTimer - 1 * (deltaTime / 10);
 	}
 
-	positionHitBox.x = position.x + 4;
-	positionHitBox.y = position.y + 3;
+	positionHitBox.x = position.x + 3;
+	positionHitBox.y = position.y + 2;
 }
 
 void Enemy::Draw(Tmpl8::Surface* screen)

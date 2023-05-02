@@ -26,6 +26,7 @@ public:
 	vec2 position;
 	int health;
 	int attackTimer;
+	int invincibilityTimer;
 
 private:
 	Sprite* spriteIdle = nullptr;
@@ -38,6 +39,5 @@ private:
 	bool running;
 	bool lookingLeft;
 
-	int invincibilityTimer;
 	int width, height;
 };

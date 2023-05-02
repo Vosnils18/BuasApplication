@@ -8,12 +8,25 @@
     <ClCompile Include="template.cpp">
       <Filter>template code</Filter>
     </ClCompile>
-    <ClCompile Include="includes\player.cpp" />
-    <ClCompile Include="includes\bullet.cpp" />
-    <ClCompile Include="includes\enemy.cpp" />
     <ClCompile Include="collider.cpp" />
-    <ClCompile Include="includes\ui.cpp" />
-    <ClCompile Include="includes\trapdoor.cpp" />
+    <ClCompile Include="includes\bullet.cpp">
+      <Filter>Includes</Filter>
+    </ClCompile>
+    <ClCompile Include="includes\enemy.cpp">
+      <Filter>Includes</Filter>
+    </ClCompile>
+    <ClCompile Include="includes\healthflask.cpp">
+      <Filter>Includes</Filter>
+    </ClCompile>
+    <ClCompile Include="includes\player.cpp">
+      <Filter>Includes</Filter>
+    </ClCompile>
+    <ClCompile Include="includes\trapdoor.cpp">
+      <Filter>Includes</Filter>
+    </ClCompile>
+    <ClCompile Include="includes\ui.cpp">
+      <Filter>Includes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -23,16 +36,32 @@
     <ClInclude Include="template.h">
       <Filter>template code</Filter>
     </ClInclude>
-    <ClInclude Include="includes\player.h" />
-    <ClInclude Include="includes\bullet.h" />
-    <ClInclude Include="includes\enemy.h" />
     <ClInclude Include="collider.h" />
-    <ClInclude Include="includes\ui.h" />
-    <ClInclude Include="includes\trapdoor.h" />
+    <ClInclude Include="includes\bullet.h">
+      <Filter>Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\enemy.h">
+      <Filter>Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\healthflask.h">
+      <Filter>Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\player.h">
+      <Filter>Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\trapdoor.h">
+      <Filter>Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\ui.h">
+      <Filter>Includes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
       <UniqueIdentifier>{bf32dd6e-4be7-4889-8ac6-49e7ee163c40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Includes">
+      <UniqueIdentifier>{ffb68bc5-dcb8-477e-a317-8d583916230b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
