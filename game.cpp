@@ -11,6 +11,7 @@
 #include <math.h>
 #include <vector>
 #include <fstream>
+#include "MMSystem.h"
 
 #include "includes/player.h"
 #include "includes/bullet.h"
@@ -282,8 +283,9 @@ namespace Tmpl8
 			{
 				if (player.attackTimer < 0.1)
 				{
+					PlaySound("assets/sounds/mixkit-electronic-retro-block-hit-2185.wav", NULL, SND_ASYNC);
 					bullets.emplace_back(new Bullet(bulletSprite, player.position, mousePos, false));
-					player.attackTimer += 2 * deltaTime;
+					player.attackTimer += 2.5 * deltaTime;
 				}
 			}
 
@@ -339,6 +341,7 @@ namespace Tmpl8
 					flasks[i]->destroy = true;
 					if (player.health < FULLHP)
 					{
+						PlaySound("assets/sounds/649724__duskbreaker__8bit-power-up.wav", NULL, SND_ASYNC);
 						player.health++;
 					}
 				}
@@ -412,6 +415,7 @@ namespace Tmpl8
 			//end game if player health reaches 0
 			if (player.health <= 0)
 			{
+				PlaySound("assets/sounds/128649__cityrocker__human-has-been-nutralised.wav", NULL, SND_SYNC);
 				gameState = 2;
 			}
 			break;

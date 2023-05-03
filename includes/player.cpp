@@ -2,6 +2,8 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
+#include "MMSystem.h"
+
 using namespace Tmpl8;
 
 constexpr int FULLHP = 6;
@@ -119,6 +121,7 @@ void Player::DealDamage(int damage)
 	if (invincibilityTimer < 1)
 	{
 		health -= damage;
+		PlaySound("assets/sounds/350924__cabled_mess__hurt_c_02.wav", NULL, SND_ASYNC);
 		invincibilityTimer += 50;
 	}
 }

@@ -21,3 +21,4 @@ Left Mouse Button: Shoot
 
 Sprites by: 0x72 - https://0x72.itch.io/dungeontileset-ii
 Slight alterations were made.
+all sounds are from: Freesounds.org
