@@ -4,16 +4,17 @@
 
 using namespace Tmpl8;
 
-constexpr int RANGE = 200;
-constexpr int RANGEE = 400;
+constexpr int RANGE = 480;
 
 Bullet::Bullet(Sprite* sprite, vec2 posOrigin, vec2 posDestination, bool enemyBullet)
 {
 	this->sprite = sprite;
+	this->animationFrame = 0;
 	this->position = posOrigin;
 	this->posOrigin = posOrigin;
 	this->width = 6;
 	this->height = 6;
+	this->hitWall = 0;
 	this->enemyBullet = enemyBullet;
 	if (this->enemyBullet)
 	{
@@ -49,30 +50,50 @@ void Bullet::Move(Surface* screen)
 	vec2 travelDistance = position - posOrigin;
 	positionHitBox.x = position.x + 5;
 	positionHitBox.y = position.y + 7;
-
-	if (position.x < TILESIZE || position.x > BufferWidth - TILESIZE || position.y < TILESIZE || position.y > BufferHeight - TILESIZE)
+		
+	if (position.x < TILESIZE || position.x > BufferWidth - TILESIZE - width)
+	{
+		if (hitWall >= 2 || enemyBullet)
+		{
+			destroy = true;
+			return;
+		}
+		else
+		{
+			currentv.x -= currentv.x * 2;
+			hitWall++;
+		}
+	}
+	if (position.y < TILESIZE - 5 || position.y > BufferHeight - TILESIZE - height) 
+	{ 
+		if (hitWall >= 2 || enemyBullet)
+		{
+			destroy = true;
+			return;
+		}
+		else
+		{
+			currentv.y -= currentv.y * 2;
+			hitWall++;
+		}
+	}
+	
+	if (travelDistance.x > RANGE || travelDistance.x < -RANGE || travelDistance.y > RANGE || travelDistance.y < -RANGE)
 	{
 		destroy = true;
 		return;
 	}
-	
-	if (enemyBullet)
+
+	if (animationFrame == 0)
 	{
-		if (travelDistance.x > RANGEE || travelDistance.x < -RANGEE || travelDistance.y > RANGEE || travelDistance.y < -RANGEE)
-		{
-			destroy = true;
-			return;
-		}
+		animationFrame = 1;
 	}
 	else
 	{
-		if (travelDistance.x > RANGE || travelDistance.x < -RANGE || travelDistance.y > RANGE || travelDistance.y < -RANGE)
-		{
-			destroy = true;
-			return;
-		}
+		animationFrame = 0;
 	}
 
+	sprite->SetFrame(animationFrame);
 	sprite->Draw(screen, position.x, position.y);
 }
 

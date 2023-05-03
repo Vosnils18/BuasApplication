@@ -6,14 +6,16 @@
 
 using namespace Tmpl8;
 
-class Enemy
+class ImpEnemy
 {
 public:
-	Enemy(Sprite* spriteIdle, Sprite* spriteRun, int isShooter);
+	ImpEnemy(Sprite* spriteIdle, Sprite* spriteRun, Sprite* bouncySprite, int isShooter, bool isBouncy);
 
 	void setPosition(vec2 pos);
 
 	void Update(float deltaTime, vec2 playerPos);
+
+	void Rage(vec2 position, vec2 playerPos);
 
 	void Draw(Tmpl8::Surface* screen);
 
@@ -44,17 +46,55 @@ public:
 	int attackTimer;
 	bool followPlayer;
 	int isShooter;
+	bool isBouncy;
+	int health;
 
 private:
 	Sprite* spriteIdle = nullptr;
 	Sprite* spriteRun = nullptr;
 	Sprite* activeSprite = nullptr;
+	Sprite* bouncySprite = nullptr;
 
-	int enemyMoveTimer;
+	float enemyMoveTimer;
 	int direction;
 	vec2 positionHitBox;
 	
 	bool running;
+	bool rage;
+	int animationFrame;
+	bool lookingLeft;
+	bool firstRage;
+
+	float speed;
+	vec2 currentv;
+	int width, height;
+};
+
+class BounceEnemy
+{
+public:
+	BounceEnemy(Sprite* sprite);
+
+	void setPosition(vec2 pos);
+
+	void Update(float deltaTime);
+
+	void Draw(Tmpl8::Surface* screen);
+
+	Collider GetCollider()
+	{
+		return Collider(positionHitBox, vec2(width, height));
+	}
+
+	bool destroy = false;
+	vec2 position;
+
+private:
+	Sprite* sprite = nullptr;
+
+	int direction;
+	vec2 positionHitBox;
+
 	int animationFrame;
 	bool lookingLeft;
 

@@ -29,10 +29,12 @@ public:
 
 private:
 	Sprite* sprite = nullptr;
+	int animationFrame;
 
 	vec2 currentv;
 	float maxSpeed;
 	vec2 aimDirNorm;
+	int hitWall;
 
 	int width, height;
 	vec2 position;

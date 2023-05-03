@@ -32,6 +32,7 @@ namespace Tmpl8
 	
 	//miscellaneous sprites
 	Sprite* bulletSprite(new Sprite(new Surface("assets/theRealOne/Bullet.png"), 2));
+	Sprite* enemyBulletSprite(new Sprite(new Surface("assets/theRealOne/EnemyBullet.png"), 2));
 	Sprite* heartSprite(new Sprite(new Surface("assets/theRealOne/Hearts.png"), 3));
 	Sprite* trapDoorSprite(new Sprite(new Surface("assets/theRealOne/Trapdoor.png"), 1));
 	Sprite* healthFlaskSprite(new Sprite(new Surface("assets/theRealOne/flask_red.png"), 1));
@@ -39,6 +40,7 @@ namespace Tmpl8
 	//enemy sprites
 	Sprite* enemySpriteIdle(new Sprite(new Surface("assets/theRealOne/Imp_idle.png"), 8));
 	Sprite* enemySpriteRun(new Sprite(new Surface("assets/theRealOne/Imp_run.png"), 8));
+	Sprite* bounceEnemySprite(new Sprite(new Surface("assets/theRealOne/GoblinBounce.png"), 8));
 
 	//buttons
 	Button* restartButton(new Button("Restart Game", 0x000000, 0xffffff));
@@ -46,10 +48,11 @@ namespace Tmpl8
 	
 	//Vectors for bullets, enemies and hearts to be stored in
 	std::vector<Bullet*> bullets;
-	std::vector<Enemy*> enemies;
+	std::vector<ImpEnemy*> enemies;
 	std::vector<Heart*> hearts;
 	std::vector<HealthFlask*> flasks;
 	int counter = 5;
+	int bounceCounter = 0;
 
 	//Mouse state
 	float Game::mx = 0;
@@ -114,6 +117,8 @@ namespace Tmpl8
 		delete enemySpriteIdle;
 		delete enemySpriteRun;
 		delete bulletSprite;
+		delete enemyBulletSprite;
+		delete bounceEnemySprite;
 	}
 
 	//function is called every time mouse moves. Saves mouse coordinates oin mx, my
@@ -141,6 +146,7 @@ namespace Tmpl8
 		srand(static_cast<unsigned int>(time(0)));
 		int* randomNumbersX = new int[counter];
 		int* randomNumbersY = new int[counter];
+		bool isBouncy = false;
 		for (size_t i = 0; i < counter; i++)
 		{
 			randomNumbersX[i] = rand() % (BufferWidth - 16) + 16;
@@ -150,7 +156,15 @@ namespace Tmpl8
 		//create enemies and place them in vector
 		for (size_t i = 0; i < counter; i++)
 		{
-			enemies.emplace_back(new Enemy(enemySpriteIdle, enemySpriteRun, i));
+			if (i % 5 == 0)
+			{
+				isBouncy = true;
+			}
+			else
+			{
+				isBouncy = false;
+			}
+			enemies.emplace_back(new ImpEnemy(enemySpriteIdle, enemySpriteRun, bounceEnemySprite, i, isBouncy));
 			enemies[i]->setPosition(vec2(randomNumbersX[i], randomNumbersY[i]));
 		}
 		delete randomNumbersX;
@@ -201,7 +215,7 @@ namespace Tmpl8
 		flasks.erase(std::remove_if(flasks.begin(), flasks.end(), deleteDestroyedFlask), flasks.end());
 
 		// Remove deleted enemies.
-		auto deleteDestroyedEnemy = [](Enemy* e)
+		auto deleteDestroyedEnemy = [](ImpEnemy* e)
 		{
 			if (e->destroy)
 			{
@@ -264,7 +278,8 @@ namespace Tmpl8
 			//give velocity to bullet when clicked and put bullet object in bullet vector.
 			if (mouseClicked)
 			{
-				if (player.attackTimer == 0)
+				std::cout << "mouse Clicked" << mx << std::endl;
+				if (player.attackTimer < 0.1)
 				{
 					bullets.emplace_back(new Bullet(bulletSprite, player.position, mousePos, false));
 					player.attackTimer += 2 * deltaTime;
@@ -282,7 +297,11 @@ namespace Tmpl8
 					if (enemies[i]->GetCollider().CheckCollision(bullets[j]->GetCollider(), 1.0f) && !bullets[j]->enemyBullet)
 					{
 						bullets[j]->destroy = true;
-						enemies[i]->destroy = true;
+						enemies[i]->health--;
+						if (enemies[i]->isBouncy)
+						{
+							enemies[i]->Rage(enemies[i]->position, player.position);
+						}
 					}
 				}
 
@@ -295,7 +314,7 @@ namespace Tmpl8
 				//check conditions for enemy attack and fire bullet towards player if conditions are right
 				if (enemies[i]->attackTimer == 0 && enemies[i]->followPlayer && enemies[i]->isShooter % 4 == 0)
 				{
-					bullets.emplace_back(new Bullet(bulletSprite, enemies[i]->position, player.position, true));
+					bullets.emplace_back(new Bullet(enemyBulletSprite, enemies[i]->position, player.position, true));
 					enemies[i]->attackTimer += rand() % 400 + 50;
 				}
 
@@ -362,7 +381,7 @@ namespace Tmpl8
 			flasks.erase(std::remove_if(flasks.begin(), flasks.end(), deleteDestroyedFlask), flasks.end());
 
 			// delete and remove destroyed enemies from vector
-			auto deleteDestroyedEnemy = [](Enemy* e)
+			auto deleteDestroyedEnemy = [](ImpEnemy* e)
 			{
 				if (e->destroy)
 				{
@@ -380,7 +399,7 @@ namespace Tmpl8
 			enemies.erase(std::remove_if(enemies.begin(), enemies.end(), deleteDestroyedEnemy), enemies.end());
 
 			//advance to next level when all enemies have been defeated
-			if (enemies.size() < 1)
+			if (enemies.size() < 1 )
 			{
 				trapdoor->Draw(screen);
 
