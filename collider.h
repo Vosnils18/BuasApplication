@@ -10,7 +10,7 @@ public:
 
 	void Move(float dx, float dy) { position = (dx, dy); }
 
-	bool CheckCollision(Collider& other, float force);
+	bool CheckCollision(Collider& other);
 
 	vec2 GetPosition() { return position; }
 	vec2 GetHalfSize() { return vec2(size.x / 2.0f, size.y / 2.0f); }

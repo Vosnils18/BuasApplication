@@ -146,7 +146,7 @@ namespace Tmpl8 {
 
 	void NotifyUser(char* s)
 	{
-		HWND hApp = FindWindow(nullptr, TemplateVersion);
+		HWND hApp = FindWindow(nullptr, GameName);
 		MessageBox(hApp, s, "ERROR", MB_OK);
 		exit(0);
 	}
@@ -320,7 +320,7 @@ int main(int argc, char** argv)
 #ifdef FULLSCREEN
 	window = SDL_CreateWindow(TemplateVersion, 100, 100, ScreenWidth, ScreenHeight, SDL_WINDOW_FULLSCREEN);
 #else
-	window = SDL_CreateWindow(TemplateVersion, 100, 100, ScreenWidth, ScreenHeight, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow(GameName, 100, 100, ScreenWidth, ScreenHeight, SDL_WINDOW_SHOWN);
 #endif
 	surface = new Surface(BufferWidth, BufferHeight);
 	surface->Clear(0);

@@ -67,13 +67,14 @@ Button::Button(char* text, Pixel buttonColor, Pixel textColor)
 	this->buttonColor = defaultButtonColor;
 	this->textColor = textColor;
 	this->text = text;
+
+	this->boxWidth = 100;
+	this->boxHeight = 50;
 }
 
 void Button::Create(Surface* screen, vec2 position)
 {
 	this->position = position;
-	boxWidth = 100;
-	boxHeight = 50;
 
 	int tx = position.x + (boxWidth - 6 * strlen(text)) / 2.0 + 1;
 	int ty = position.y + (boxHeight - 6) / 2.0;
@@ -84,6 +85,7 @@ void Button::Create(Surface* screen, vec2 position)
 
 bool Button::CheckPosition(vec2 mousePos, bool mouseclicked)
 {
+	//check if mouse clicked on button, else return false.
 	if (mouseclicked)
 	{
 		if (mousePos.x > position.x && mousePos.x < (position.x + boxWidth))

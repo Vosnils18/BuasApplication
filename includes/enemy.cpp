@@ -49,10 +49,12 @@ void ImpEnemy::setPosition(vec2 pos)
 
 void ImpEnemy::Update(float deltaTime, vec2 playerPos)
 {
+	//check if this is supposed to be the bouncy (green) enemy
 	if (isBouncy)
 	{
 		activeSprite = bouncySprite;
 
+		//Heighten speed and make enemy bouncy when raging
 		if (rage)
 		{
 			if (position.x < TILESIZE) { currentv.x -= currentv.x * 2; }
@@ -84,10 +86,10 @@ void ImpEnemy::Update(float deltaTime, vec2 playerPos)
 			if (position.y < TILESIZE - 5) { position.y = TILESIZE - 5; }
 			if (position.y > BufferHeight - TILESIZE - height) { position.y = BufferHeight - TILESIZE - height; }
 		}
-
 		positionHitBox.x = position.x + 3;
 		positionHitBox.y = position.y + 4;
 
+		//Make sure the right sprite is grabbed from sheet.
 		if (!lookingLeft)
 		{
 			if (animationFrame < 39)
@@ -113,8 +115,9 @@ void ImpEnemy::Update(float deltaTime, vec2 playerPos)
 
 		activeSprite->SetFrame(animationFrame / 10);
 	}
-	else
+	else //normal (red) enemy
 	{
+		//change direction every 5-40 ticks
 		if (enemyMoveTimer < 1)
 		{
 			direction = (rand() % 8) + 1;
@@ -125,6 +128,12 @@ void ImpEnemy::Update(float deltaTime, vec2 playerPos)
 			enemyMoveTimer--;
 		}
 
+		if (attackTimer > 0)
+		{
+			attackTimer = attackTimer - 1 * (deltaTime / 10);
+		}
+
+		//Set path to player and follow when in range of player
 		vec2 pathToPlayer = playerPos - position;
 		vec2 aimDirNorm = pathToPlayer.normalized();
 		currentv = aimDirNorm * speed;
@@ -147,8 +156,17 @@ void ImpEnemy::Update(float deltaTime, vec2 playerPos)
 		else if (direction == 3) { position.y--; running = true; followPlayer = false; }
 		else if (direction == 4) { position.y++; running = true; followPlayer = false; }
 		else { running = false; followPlayer = false; }
-		//std::cout << running << " " << direction << std::endl;
 
+		//Make sure enemy doesn't go out of bounds.
+		if (position.x < TILESIZE) { position.x = TILESIZE; }
+		if (position.x > BufferWidth - TILESIZE - width) { position.x = BufferWidth - TILESIZE - width; }
+		if (position.y < TILESIZE - 5) { position.y = TILESIZE - 5; }
+		if (position.y > BufferHeight - TILESIZE - height) { position.y = BufferHeight - TILESIZE - height; }
+
+		positionHitBox.x = position.x + 3;
+		positionHitBox.y = position.y + 2;
+
+		//Make sure right sprite is grabbed from sheet.
 		if (running == true)
 		{
 			activeSprite = spriteRun;
@@ -180,21 +198,7 @@ void ImpEnemy::Update(float deltaTime, vec2 playerPos)
 				animationFrame = 40;
 			}
 		}
-
 		activeSprite->SetFrame(animationFrame / 10);
-
-		if (position.x < TILESIZE) { position.x = TILESIZE; }
-		if (position.x > BufferWidth - TILESIZE - width) { position.x = BufferWidth - TILESIZE - width; }
-		if (position.y < TILESIZE - 5) { position.y = TILESIZE - 5; }
-		if (position.y > BufferHeight - TILESIZE - height) { position.y = BufferHeight - TILESIZE - height; }
-
-		if (attackTimer > 0)
-		{
-			attackTimer = attackTimer - 1 * (deltaTime / 10);
-		}
-
-		positionHitBox.x = position.x + 3;
-		positionHitBox.y = position.y + 2;
 	}
 
 	if (health <= 0)

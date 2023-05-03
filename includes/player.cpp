@@ -30,6 +30,11 @@ Player::Player(Sprite* spriteIdle, Sprite* spriteIdleRed, Sprite* spriteRun, Spr
 
 void Player::Update(float deltaTime)
 {
+	if (attackTimer > 0)
+	{
+		attackTimer = attackTimer - 1 * (deltaTime / 10);
+	}
+
 	if (running)
 	{
 		if (invincibilityTimer > 0)
@@ -55,6 +60,7 @@ void Player::Update(float deltaTime)
 		}
 	}
 
+	//Get input from keyboard and move player accordingly.
 	if ((GetAsyncKeyState('W')) || (GetAsyncKeyState('A')) || (GetAsyncKeyState('S')) || (GetAsyncKeyState('D')))
 	{
 		running = true;
@@ -65,8 +71,13 @@ void Player::Update(float deltaTime)
 	}
 	else { running = false; }
 
-	activeSprite->SetFrame(animationFrame / 10);
+	//Keep player within bounds.
+	if (position.x < 16) { position.x = 16; }
+	if (position.x > BufferWidth - 16 - width) { position.x = BufferWidth - 16 - width; }
+	if (position.y < 16 - 5) { position.y = 16 - 5; }
+	if (position.y > BufferHeight - 16 - height) { position.y = BufferHeight - 16 - height; }
 	
+	//Make sure right sprite is grabbed from sheet.
 	if (!lookingLeft)
 	{
 		if (animationFrame < 39)
@@ -90,15 +101,7 @@ void Player::Update(float deltaTime)
 		}
 	}
 
-	if (position.x < 16) { position.x = 16; }
-	if (position.x > BufferWidth - 16 - width) { position.x = BufferWidth - 16 - width; }
-	if (position.y < 16 - 5) { position.y = 16 - 5; }
-	if (position.y > BufferHeight - 16 - height) { position.y = BufferHeight - 16 - height; }
-
-	if (attackTimer > 0)
-	{
-		attackTimer = attackTimer - 1 * (deltaTime / 10);
-	}
+	activeSprite->SetFrame(animationFrame / 10);
 
 	if (health > FULLHP)
 	{

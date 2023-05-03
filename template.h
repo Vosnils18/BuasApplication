@@ -21,7 +21,7 @@ constexpr int ScreenHeight = 480 * ScreenScalingFactor;
 // #define FULLSCREEN
 // #define ADVANCEDGL	// faster if your system supports it. Switches SDL2's texture buffer out for OpenGL texture buffer with mappings to CPU Memory. 
 
-static const char* TemplateVersion = "Template_v2019.08";
+static const char* GameName = "Clear The Dungeon";
 static int exitapp = 0;
 
 //SIMD Intrinsics headers.

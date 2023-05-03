@@ -18,6 +18,7 @@ void TrapDoor::SetPosition()
 {
 	srand(static_cast<unsigned int>(time(0)));
 
+	//Set random position.
 	position.x = rand() % (BufferWidth - width * 3) + width;
 	position.y = rand() % (BufferHeight - height * 3) + height;
 	std::cout << position.x << " " << position.y << std::endl;

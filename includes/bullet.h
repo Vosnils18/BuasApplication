@@ -10,13 +10,7 @@ class Bullet
 public:
 	Bullet(Sprite* sprite, vec2 posOrigin, vec2 posDestination, bool enemyBullet);
 
-	//void Draw(Tmpl8::Surface* screen);
-
-	//void setPosition(vec2 posOrigin);
-
 	void Move(Tmpl8::Surface* screen);
-
-	//void setVelocity(vec2 directionNorm);
 
 	Collider GetCollider() 
 	{ 
@@ -25,6 +19,7 @@ public:
 
 	bool destroy = false;
 	bool enemyBullet = false;
+	
 	vec2 posOrigin;
 
 private:

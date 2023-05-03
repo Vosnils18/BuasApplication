@@ -42,6 +42,7 @@ public:
 	}
 
 	bool destroy = false;
+	
 	vec2 position;
 	int attackTimer;
 	bool followPlayer;
@@ -54,49 +55,16 @@ private:
 	Sprite* spriteRun = nullptr;
 	Sprite* activeSprite = nullptr;
 	Sprite* bouncySprite = nullptr;
+	
+	int animationFrame;
+	bool lookingLeft;
 
+	vec2 positionHitBox;
 	float enemyMoveTimer;
 	int direction;
-	vec2 positionHitBox;
 	
 	bool running;
 	bool rage;
-	int animationFrame;
-	bool lookingLeft;
-	bool firstRage;
-
-	float speed;
-	vec2 currentv;
-	int width, height;
-};
-
-class BounceEnemy
-{
-public:
-	BounceEnemy(Sprite* sprite);
-
-	void setPosition(vec2 pos);
-
-	void Update(float deltaTime);
-
-	void Draw(Tmpl8::Surface* screen);
-
-	Collider GetCollider()
-	{
-		return Collider(positionHitBox, vec2(width, height));
-	}
-
-	bool destroy = false;
-	vec2 position;
-
-private:
-	Sprite* sprite = nullptr;
-
-	int direction;
-	vec2 positionHitBox;
-
-	int animationFrame;
-	bool lookingLeft;
 
 	float speed;
 	vec2 currentv;

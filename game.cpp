@@ -6,9 +6,11 @@
 #include <cstdlib>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+
 #include <iostream>
 #include <math.h>
 #include <vector>
+#include <fstream>
 
 #include "includes/player.h"
 #include "includes/bullet.h"
@@ -278,7 +280,6 @@ namespace Tmpl8
 			//give velocity to bullet when clicked and put bullet object in bullet vector.
 			if (mouseClicked)
 			{
-				std::cout << "mouse Clicked" << mx << std::endl;
 				if (player.attackTimer < 0.1)
 				{
 					bullets.emplace_back(new Bullet(bulletSprite, player.position, mousePos, false));
@@ -294,7 +295,7 @@ namespace Tmpl8
 				for (size_t j = 0; j < bullets.size(); j++)
 				{
 					//check collision between bullets and enemies, and if true, destroy both
-					if (enemies[i]->GetCollider().CheckCollision(bullets[j]->GetCollider(), 1.0f) && !bullets[j]->enemyBullet)
+					if (enemies[i]->GetCollider().CheckCollision(bullets[j]->GetCollider()) && !bullets[j]->enemyBullet)
 					{
 						bullets[j]->destroy = true;
 						enemies[i]->health--;
@@ -306,7 +307,7 @@ namespace Tmpl8
 				}
 
 				//check collision between enemies and player
-				if (enemies[i]->GetCollider().CheckCollision(player.GetCollider(), 2.0f))
+				if (enemies[i]->GetCollider().CheckCollision(player.GetCollider()))
 				{
 					player.DealDamage(1);
 				}
@@ -325,7 +326,7 @@ namespace Tmpl8
 			for (size_t i = 0; i < bullets.size(); i++)
 			{
 				bullets[i]->Move(screen);
-				if (bullets[i]->GetCollider().CheckCollision(player.GetCollider(), 2.0f) && bullets[i]->enemyBullet)
+				if (bullets[i]->GetCollider().CheckCollision(player.GetCollider()) && bullets[i]->enemyBullet)
 				{
 					player.DealDamage(1);
 				}
@@ -333,7 +334,7 @@ namespace Tmpl8
 
 			for (size_t i = 0; i < flasks.size(); i++)
 			{
-				if (flasks[i]->GetCollider().CheckCollision(player.GetCollider(), 2.0f))
+				if (flasks[i]->GetCollider().CheckCollision(player.GetCollider()))
 				{
 					flasks[i]->destroy = true;
 					if (player.health < FULLHP)
@@ -391,7 +392,6 @@ namespace Tmpl8
 					}
 					delete e;
 					currentScore++;
-					std::cout << "Your score: " << currentScore << std::endl;
 					return true;
 				}
 				return false;
@@ -403,7 +403,7 @@ namespace Tmpl8
 			{
 				trapdoor->Draw(screen);
 
-				if (trapdoor->GetCollider().CheckCollision(player.GetCollider(), 0.0f))
+				if (trapdoor->GetCollider().CheckCollision(player.GetCollider()))
 				{
 					NextLevel(deltaTime);
 				}
@@ -420,6 +420,7 @@ namespace Tmpl8
 		{
 			screen->Clear(30);
 
+			//create Game over window + text
 			int boxWidth = 100;
 			int boxHeight = 50;
 
@@ -432,8 +433,26 @@ namespace Tmpl8
 			screen->Bar(BoxX1, BoxY1, BoxX1 + boxWidth, BoxY1 + boxHeight, 0);
 			screen->Print("Game Over", tx, ty, 255);
 			
+			//draw final score + floor level
 			score.Update(currentScore, screen, vec2(tx, ty - 100));
 			score.Floor(floorLevel, screen);
+
+			//update Highscore ------------------------------- code from https://www.youtube.com/watch?v=c4YSBHZ2gS4&ab_channel=CalebCurry
+			std::ifstream input("highscore.txt");
+			int highscore;
+			input >> highscore;
+
+			std::ofstream output("highscore.txt");
+			if (currentScore >= highscore)
+			{
+				screen->Print("New Highscore!", tx, ty - 120, 0xffffff);
+				output << currentScore;
+			}
+			else
+			{
+				output << highscore;
+			}
+
 
 			restartButton->Create(screen, vec2(BoxX1, BoxY1 + (boxHeight * 2)));
 			if (restartButton->CheckPosition(vec2(mx, my), mouseClicked))
